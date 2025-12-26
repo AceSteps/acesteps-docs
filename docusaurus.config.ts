@@ -86,6 +86,32 @@ const config: Config = {
         href: 'https://fonts.googleapis.com',
       },
     },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'apple-touch-icon',
+        sizes: '180x180',
+        href: '/img/apple-touch-icon.png',
+      },
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '32x32',
+        href: '/img/logo-32.png',
+      },
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '192x192',
+        href: '/img/logo-192.png',
+      },
+    },
   ],
 
   themeConfig: {
@@ -108,7 +134,9 @@ const config: Config = {
       title: 'AceSteps',
       logo: {
         alt: 'AceSteps Logo',
-        src: 'img/logo.svg',
+        src: 'img/logo.png',
+        width: 32,
+        height: 32,
       },
       items: [
         {
