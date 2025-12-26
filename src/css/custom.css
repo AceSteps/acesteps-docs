@@ -178,6 +178,33 @@
   background-color: #1e293b !important;
 }
 
+/* Light mode code block text color - ensure high contrast */
+[data-theme='light'] pre {
+  background-color: #1e293b !important;
+  color: #e2e8f0 !important;
+}
+
+[data-theme='light'] pre code {
+  background-color: transparent !important;
+  color: #e2e8f0 !important;
+}
+
+/* Ensure code block wrapper has proper styling in light mode */
+[data-theme='light'] .theme-code-block {
+  background-color: #1e293b !important;
+}
+
+[data-theme='light'] .codeBlockContent_biex,
+[data-theme='light'] [class*="codeBlockContent"] {
+  background-color: #1e293b !important;
+}
+
+[data-theme='light'] .codeBlockLines_e6Vv,
+[data-theme='light'] [class*="codeBlockLines"] {
+  background-color: #1e293b !important;
+  color: #e2e8f0 !important;
+}
+
 code {
   background-color: rgba(59, 130, 246, 0.1);
   color: var(--ifm-color-primary);
