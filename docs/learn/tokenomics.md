@@ -6,110 +6,227 @@ description: Understanding AceSteps token economics
 
 # Tokenomics
 
-Understanding the token economics of AceSteps.
+A deep dive into AceSteps token economics.
 
-## Song Token Economics
+## Overview
 
-Each tokenized song has its own ERC-20 token.
+AceSteps uses a **per-song tokenization model** - each song can have its own ERC-20 token for fractional ownership.
 
-### Supply
+:::info No Platform Token
+AceSteps does not have a platform-wide token. Each song has its own independent token economy.
+:::
+
+## Per-Song Token Distribution
+
+When a creator enables trading:
+
+| Recipient | Tokens | Percentage | Purpose |
+|-----------|--------|------------|---------|
+| Creator | 80,000 | 80% | Retain majority ownership |
+| Uniswap V4 Pool | 20,000 | 20% | Enable trading liquidity |
+| **Total** | **100,000** | **100%** | Fixed, immutable supply |
+
+### Token Properties
 
 | Property | Value |
 |----------|-------|
-| Total Supply | 100,000 tokens |
+| Standard | ERC-20 |
+| Supply | 100,000 (fixed) |
 | Decimals | 18 |
-| Mintable | No (fixed supply) |
+| Mintable | No |
 | Burnable | No |
 
-### Initial Distribution
+## Initial Pool State
 
-| Recipient | Tokens | Percentage |
-|-----------|--------|------------|
-| Creator | 80,000 | 80% |
-| Uniswap Pool | 20,000 | 20% |
-
-## Value Drivers
-
-### 1. Ad Revenue
-
-- Listens generate ad impressions
-- Revenue converted to ETH
-- 80% donated to Uniswap pool
-- Token price increases
-
-### 2. Trading Activity
-
-- Buy pressure increases price
-- Sell pressure decreases price
-- Market determines fair value
-
-### 3. Song Popularity
-
-- More listens = more revenue
-- More revenue = higher price
-- Viral songs benefit holders
-
-## Price Mechanics
-
-### Initial State
+When trading is enabled, the Uniswap V4 pool starts with:
 
 ```
-Pool: 0 ETH + 20,000 tokens
-Price: Undefined (no trades yet)
+┌─────────────────────────────────────┐
+│         INITIAL POOL STATE          │
+├─────────────────────────────────────┤
+│                                     │
+│   ETH:     0                        │
+│   Tokens:  20,000                   │
+│                                     │
+│   Price:   Undefined                │
+│            (waiting for first buy)  │
+│                                     │
+└─────────────────────────────────────┘
 ```
 
-### First Trade
+This is **single-sided liquidity** - the pool starts with tokens only.
+
+## Price Discovery
+
+### First Trade Sets the Price
+
+The first buyer determines the initial market price:
 
 ```
-Buyer sends: 0.1 ETH
-Receives: ~15,000 tokens
-Pool: 0.1 ETH + 5,000 tokens
-Initial price: ~0.00001 ETH/token
+First Buyer: Sends 0.1 ETH
+Receives: ~15,000 tokens (depends on AMM curve)
+
+Pool After:
+  ETH: 0.1
+  Tokens: 5,000
+  Implied Price: ~0.00002 ETH/token
 ```
 
-### Revenue Donation
+### AMM Price Dynamics
+
+Using Uniswap's constant product formula (x × y = k):
 
 ```
-Revenue: 0.05 ETH donated
-Pool: 0.15 ETH + 5,000 tokens
-New price: ~0.00003 ETH/token (+200%)
+Buy Pressure  → ETH increases, Tokens decrease → Price UP
+Sell Pressure → Tokens increase, ETH decreases → Price DOWN
+Revenue Added → ETH increases, Tokens same → Price UP
+```
+
+## Why 80/20 Split?
+
+### Creator Benefits (80%)
+
+- **Majority Ownership** - Retain controlling stake
+- **Flexibility** - Sell some, hold some
+- **Aligned Incentives** - Success benefits creator most
+
+### Pool Benefits (20%)
+
+- **Immediate Liquidity** - Trading starts instantly
+- **Price Discovery** - Market determines value
+- **No ETH Required** - Single-sided initialization
+
+## Why No Unlock Mechanism?
+
+### Mathematical Impossibility
+
+Due to AMM (x × y = k) mechanics:
+
+```
+To buy back 99% of tokens:
+  Cost: Extremely high (exponential)
+
+To buy back 100% of tokens:
+  Cost: INFINITE ETH
+```
+
+### This Creates:
+
+| Benefit | Description |
+|---------|-------------|
+| **Permanent Liquidity** | Trading always available |
+| **No Rug Pulls** | Creator can't withdraw NFT |
+| **Long-term Value** | Continuous appreciation potential |
+
+## Revenue Distribution Model
+
+### Non-Tokenized Songs
+
+Creator holds NFT directly:
+
+| Recipient | Share | Method |
+|-----------|-------|--------|
+| NFT Owner | 80% | Off-chain payment |
+| Platform | 20% | Off-chain |
+
+### Tokenized Songs
+
+NFT locked, tokens exist:
+
+| Recipient | Share | Method |
+|-----------|-------|--------|
+| Token Pool | 80% | On-chain `donate()` |
+| Platform | 20% | Off-chain |
+
+## Value Appreciation Mechanism
+
+### How donate() Works
+
+```solidity
+// Revenue Hook adds ETH to pool
+poolManager.donate(poolKey, ethAmount, 0, "");
+```
+
+This:
+
+1. Adds ETH to pool reserves
+2. Does NOT add tokens
+3. Result: Token price increases
+4. All holders benefit proportionally
+
+### Example Calculation
+
+```
+Before Revenue:
+  Pool: 2 ETH + 20,000 tokens
+  Price: 0.0001 ETH/token
+  Total Value: 2 ETH
+
+Monthly Revenue: 0.5 ETH
+Platform Share: 0.1 ETH (20%)
+Pool Share: 0.4 ETH (80%)
+
+After donate():
+  Pool: 2.4 ETH + 20,000 tokens
+  Price: 0.00012 ETH/token (+20%)
+  Total Value: 2.4 ETH
 ```
 
 ## Platform Economics
 
-### Revenue Streams
+### Revenue Sources
 
-| Source | Platform Share |
-|--------|----------------|
-| Ad Revenue | 20% |
-| Swap Fees | 1% of volume |
+| Source | Amount |
+|--------|--------|
+| Ad Revenue | 20% of all streaming revenue |
+| Swap Fees | 1% per trade (platform owns LP) |
+| Future | Premium features, subscriptions |
 
 ### Sustainability
 
-- No platform token
+- No token emissions
 - Revenue-based model
 - Aligned with user success
 
-## Comparison
+## Token Holder Benefits
 
-### vs Traditional Music
+### For Creators
+
+1. **Immediate Liquidity** - Convert to ETH anytime
+2. **Revenue Share** - Benefit from song's success
+3. **Majority Control** - 80% ownership
+4. **Flexibility** - Hold or sell at will
+
+### For Investors
+
+1. **Early Access** - Buy at low prices
+2. **Upside Potential** - Price appreciates with popularity
+3. **Liquid Market** - Trade 24/7 on Uniswap
+4. **Transparent** - All activity on-chain
+
+## Comparison with Traditional Music
 
 | Aspect | Traditional | AceSteps |
 |--------|-------------|----------|
-| Ownership | Label owns 80%+ | Creator owns 80% |
-| Revenue | Delayed payments | Real-time on-chain |
-| Liquidity | None | Instant via DEX |
-| Fan upside | None | Token appreciation |
+| Creator Share | 10-20% | 80% |
+| Fan Investment | Not possible | Direct token ownership |
+| Revenue Timing | Months/years | Real-time |
+| Transparency | Opaque | On-chain |
+| Liquidity | None | Instant |
 
-### vs Other Music NFTs
+## Key Metrics
 
-| Aspect | Other NFTs | AceSteps |
-|--------|------------|----------|
-| Ownership | All or nothing | Fractional |
-| Trading | NFT marketplaces | DEX (higher liquidity) |
-| Revenue | Manual distribution | Automatic via hook |
+| Metric | Value |
+|--------|-------|
+| Tokens per Song | 100,000 |
+| Creator Allocation | 80,000 (80%) |
+| Pool Allocation | 20,000 (20%) |
+| Swap Fee | 1% |
+| Ad Revenue to Pool | 80% |
+| Ad Revenue to Platform | 20% |
 
 ## Related
 
 - [Song Tokens](/tokenization/song-tokens)
-- [Revenue Sharing](/get-started/concepts/revenue-sharing)
+- [Revenue Distribution](/trading/revenue-distribution)
+- [How It Works](/learn/how-it-works)

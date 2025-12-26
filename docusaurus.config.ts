@@ -35,6 +35,7 @@ const config: Config = {
         indexBlog: false,
       },
     ],
+    '@docusaurus/theme-live-codeblock',
   ],
 
   presets: [
@@ -46,17 +47,54 @@ const config: Config = {
           routeBasePath: '/',
           editUrl: 'https://github.com/Batuhan4/acesteps-docs/edit/main/',
           breadcrumbs: true,
+          showLastUpdateTime: true,
+          showLastUpdateAuthor: true,
         },
         blog: false,
         theme: {
           customCss: './src/css/custom.css',
         },
+        sitemap: {
+          changefreq: 'weekly',
+          priority: 0.5,
+          ignorePatterns: ['/tags/**'],
+          filename: 'sitemap.xml',
+        },
       } satisfies Preset.Options,
     ],
   ],
 
+  headTags: [
+    {
+      tagName: 'meta',
+      attributes: {
+        name: 'keywords',
+        content: 'music, nft, ai, blockchain, base, farcaster, web3, tokenization, streaming',
+      },
+    },
+    {
+      tagName: 'meta',
+      attributes: {
+        property: 'og:type',
+        content: 'website',
+      },
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'preconnect',
+        href: 'https://fonts.googleapis.com',
+      },
+    },
+  ],
+
   themeConfig: {
     image: 'img/acesteps-social-card.jpg',
+    metadata: [
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:site', content: '@acesteps' },
+      { name: 'og:site_name', content: 'AceSteps Documentation' },
+    ],
     colorMode: {
       defaultMode: 'dark',
       disableSwitch: false,

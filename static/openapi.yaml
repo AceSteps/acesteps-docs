@@ -1,0 +1,461 @@
+openapi: 3.0.3
+info:
+  title: AceSteps API
+  version: 1.0.0
+  description: |
+    API for AceSteps - AI-Powered Music Creation & Tokenization Platform.
+
+    AceSteps allows users to create music using AI, mint songs as NFTs,
+    enable fractional ownership via tokens, and trade on Uniswap V4.
+  contact:
+    name: AceSteps Support
+    url: https://acesteps.xyz
+    email: support@acesteps.xyz
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+
+servers:
+  - url: https://api.acesteps.xyz/v1
+    description: Production server
+  - url: https://api-staging.acesteps.xyz/v1
+    description: Staging server
+
+tags:
+  - name: Music Generation
+    description: AI music generation endpoints
+  - name: NFT
+    description: NFT minting and management
+  - name: Trading
+    description: Token trading operations
+  - name: User
+    description: User account and profile
+
+paths:
+  /music/generate:
+    post:
+      summary: Generate music from prompt
+      description: Generate AI music using ACE-Step model from a text prompt
+      operationId: generateMusic
+      tags:
+        - Music Generation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - prompt
+              properties:
+                prompt:
+                  type: string
+                  description: Text description of the music to generate
+                  example: "chill lofi beat with rain sounds and soft piano"
+                duration:
+                  type: integer
+                  description: Duration in seconds (30-240)
+                  default: 30
+                  minimum: 30
+                  maximum: 240
+            examples:
+              lofi:
+                summary: Lo-fi beat
+                value:
+                  prompt: "chill lofi beat with rain sounds and soft piano"
+                  duration: 30
+              edm:
+                summary: EDM track
+                value:
+                  prompt: "upbeat electronic dance music with synth leads"
+                  duration: 60
+      responses:
+        '200':
+          description: Music generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationResponse'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /music/{generationId}:
+    get:
+      summary: Get generation status
+      description: Check the status of a music generation job
+      operationId: getGenerationStatus
+      tags:
+        - Music Generation
+      parameters:
+        - name: generationId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The generation job ID
+      responses:
+        '200':
+          description: Generation status retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationResponse'
+        '404':
+          description: Generation not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /nft/mint:
+    post:
+      summary: Mint a song as NFT
+      description: Mint a generated song as an ERC-721 NFT on Base Network
+      operationId: mintNFT
+      tags:
+        - NFT
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - generationId
+              properties:
+                generationId:
+                  type: string
+                  description: The generation ID of the song to mint
+                title:
+                  type: string
+                  description: Title for the NFT
+                description:
+                  type: string
+                  description: Description for the NFT metadata
+      responses:
+        '200':
+          description: Mint transaction prepared
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MintResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /nft/{tokenId}:
+    get:
+      summary: Get NFT details
+      description: Retrieve details of a minted song NFT
+      operationId: getNFT
+      tags:
+        - NFT
+      parameters:
+        - name: tokenId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The NFT token ID
+      responses:
+        '200':
+          description: NFT details retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NFTDetails'
+        '404':
+          description: NFT not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /nft/{tokenId}/enable-trading:
+    post:
+      summary: Enable trading for NFT
+      description: Lock NFT in vault and create ERC-20 tokens for trading
+      operationId: enableTrading
+      tags:
+        - NFT
+        - Trading
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: tokenId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The NFT token ID
+      responses:
+        '200':
+          description: Trading enabled transaction prepared
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnableTradingResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Trading already enabled or NFT not owned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /trading/pools:
+    get:
+      summary: List trading pools
+      description: Get list of all song token trading pools
+      operationId: listPools
+      tags:
+        - Trading
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+          description: Number of pools to return
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+          description: Offset for pagination
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+            enum: [volume, liquidity, price_change]
+            default: volume
+          description: Sort order
+      responses:
+        '200':
+          description: List of trading pools
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pools:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Pool'
+                  total:
+                    type: integer
+                  hasMore:
+                    type: boolean
+
+  /user/profile:
+    get:
+      summary: Get user profile
+      description: Retrieve authenticated user's profile
+      operationId: getUserProfile
+      tags:
+        - User
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: User profile retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: JWT token from Farcaster authentication
+
+  schemas:
+    GenerationResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique generation ID
+          example: "gen_abc123xyz"
+        status:
+          type: string
+          enum: [pending, processing, completed, failed]
+          description: Current status of generation
+        audioUrl:
+          type: string
+          format: uri
+          description: URL to generated audio (when completed)
+        audioHash:
+          type: string
+          description: SHA-256 hash of audio file
+        duration:
+          type: integer
+          description: Duration in seconds
+        prompt:
+          type: string
+          description: Original prompt used
+        createdAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
+
+    MintResponse:
+      type: object
+      properties:
+        transactionData:
+          type: object
+          properties:
+            to:
+              type: string
+              description: Contract address
+            data:
+              type: string
+              description: Encoded transaction data
+            value:
+              type: string
+              description: ETH value (typically 0)
+        metadataUri:
+          type: string
+          format: uri
+          description: IPFS URI for NFT metadata
+        signature:
+          type: string
+          description: Platform signature for minting
+
+    NFTDetails:
+      type: object
+      properties:
+        tokenId:
+          type: string
+        owner:
+          type: string
+          description: Current owner address
+        title:
+          type: string
+        description:
+          type: string
+        audioUrl:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        isPublished:
+          type: boolean
+        isTradeable:
+          type: boolean
+        linkedToken:
+          type: string
+          description: ERC-20 token address if trading enabled
+        createdAt:
+          type: string
+          format: date-time
+
+    EnableTradingResponse:
+      type: object
+      properties:
+        transactionData:
+          type: object
+          properties:
+            to:
+              type: string
+            data:
+              type: string
+            value:
+              type: string
+        tokenAddress:
+          type: string
+          description: Address of the ERC-20 token to be created
+        poolAddress:
+          type: string
+          description: Address of the Uniswap V4 pool
+
+    Pool:
+      type: object
+      properties:
+        tokenAddress:
+          type: string
+        nftId:
+          type: string
+        songTitle:
+          type: string
+        price:
+          type: string
+          description: Current token price in ETH
+        priceChange24h:
+          type: number
+          description: 24h price change percentage
+        volume24h:
+          type: string
+          description: 24h trading volume in ETH
+        liquidity:
+          type: string
+          description: Total liquidity in ETH
+        holders:
+          type: integer
+          description: Number of token holders
+
+    UserProfile:
+      type: object
+      properties:
+        address:
+          type: string
+          description: Wallet address
+        farcasterFid:
+          type: integer
+          description: Farcaster FID
+        username:
+          type: string
+        displayName:
+          type: string
+        avatarUrl:
+          type: string
+          format: uri
+        songsCreated:
+          type: integer
+        totalEarnings:
+          type: string
+          description: Total earnings in ETH
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: object
+          description: Additional error details
