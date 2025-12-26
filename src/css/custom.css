@@ -629,6 +629,41 @@ tbody tr {
 }
 
 /* GitHub icon in navbar */
+/* Pitch Deck button styling */
+.navbar-pitch-deck-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem !important;
+  font-weight: 600 !important;
+  font-size: 0.875rem !important;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6) !important;
+  color: white !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+  margin-right: 0.5rem;
+  text-decoration: none !important;
+}
+
+.navbar-pitch-deck-link:hover {
+  background: linear-gradient(135deg, #2563eb, #7c3aed) !important;
+  color: white !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.5);
+}
+
+.navbar-pitch-deck-link:active {
+  transform: translateY(0);
+}
+
+[data-theme='dark'] .navbar-pitch-deck-link {
+  box-shadow: 0 2px 15px rgba(96, 165, 250, 0.3);
+}
+
+[data-theme='dark'] .navbar-pitch-deck-link:hover {
+  box-shadow: 0 4px 25px rgba(139, 92, 246, 0.5);
+}
+
 .header-github-link {
   display: flex;
   align-items: center;

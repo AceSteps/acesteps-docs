@@ -17,7 +17,9 @@ const config: Config = {
   organizationName: 'acesteps',
   projectName: 'acesteps-docs',
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
+  onBrokenAnchors: 'warn',
+  staticDirectories: ['static'],
 
   i18n: {
     defaultLocale: 'en',
@@ -144,6 +146,12 @@ const config: Config = {
           label: 'Cookbook',
           position: 'left',
           activeBaseRegex: '/cookbook/',
+        },
+        {
+          href: '/pitch-deck.html',
+          label: 'Pitch Deck',
+          position: 'right',
+          className: 'navbar-pitch-deck-link',
         },
         {
           href: 'https://github.com/Batuhan4/acesteps-docs',

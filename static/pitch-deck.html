@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AceSteps - Pitch Deck</title>
+    <link rel="icon" href="/img/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary: #8b5cf6;
+            --accent: #00d4ff;
+            --orange: #f97316;
+            --green: #22c55e;
+            --red: #ef4444;
+            --bg-dark: #0a0a0a;
+            --bg-card: #141414;
+            --text: #ffffff;
+            --text-muted: #a1a1aa;
+            --border: #27272a;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* Slide Container */
+        .slide {
+            min-height: 100vh;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .nav-dot:hover {
+            background: var(--primary);
+            transform: scale(1.2);
+        }
+
+        .nav-dot.active {
+            background: var(--primary);
+            border-color: var(--secondary);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            z-index: 1001;
+            transition: width 0.3s ease;
+        }
+
+        /* Slide Number */
+        .slide-number {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--text) 0%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h1.gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+
+        p {
+            font-size: 1.25rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+            max-width: 800px;
+        }
+
+        .tagline {
+            font-size: 1.75rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        .highlight {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .highlight-orange {
+            color: var(--orange);
+            font-weight: 600;
+        }
+
+        .highlight-green {
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .card-grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        /* Stats */
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        /* Lists */
+        .feature-list {
+            list-style: none;
+            text-align: left;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            color: var(--green);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .problem-list li::before {
+            content: '✗';
+            color: var(--red);
+        }
+
+        /* Tables */
+        .table-container {
+            width: 100%;
+            max-width: 1000px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1rem;
+        }
+
+        th, td {
+            padding: 16px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--bg-card);
+            color: var(--text);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            color: var(--text-muted);
+        }
+
+        tr:hover td {
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .check {
+            color: var(--green);
+            font-size: 1.2rem;
+        }
+
+        .cross {
+            color: var(--red);
+            font-size: 1.2rem;
+        }
+
+        /* Flow Diagram */
+        .flow {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .flow-step {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px 30px;
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .flow-step-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .flow-step-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .flow-step-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .flow-arrow {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        /* Quote */
+        .quote {
+            font-size: 1.75rem;
+            font-style: italic;
+            color: var(--text);
+            text-align: center;
+            max-width: 900px;
+            line-height: 1.6;
+            position: relative;
+            padding: 40px;
+        }
+
+        .quote::before {
+            content: '"';
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 6rem;
+            color: var(--primary);
+            opacity: 0.3;
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 4px;
+        }
+
+        .badge-primary {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .badge-green {
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--green);
+            border: 1px solid var(--green);
+        }
+
+        .badge-orange {
+            background: rgba(249, 115, 22, 0.2);
+            color: var(--orange);
+            border: 1px solid var(--orange);
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 30px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+
+        /* Comparison */
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .comparison-side {
+            padding: 30px;
+            border-radius: 16px;
+        }
+
+        .comparison-bad {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .comparison-good {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        /* Logo */
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: fixed;
+            top: 30px;
+            left: 40px;
+            z-index: 1000;
+        }
+
+        /* Architecture Diagram */
+        .architecture {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            white-space: pre;
+            overflow-x: auto;
+            max-width: 100%;
+        }
+
+        /* Revenue Flow */
+        .revenue-flow {
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .slide {
+                padding: 40px 30px;
+            }
+
+            h1 {
+                font-size: 3rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .card-grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .nav {
+                right: 15px;
+            }
+
+            .flow {
+                flex-direction: column;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .tagline {
+                font-size: 1.25rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .stat-value {
+                font-size: 2.5rem;
+            }
+
+            .quote {
+                font-size: 1.25rem;
+                padding: 20px;
+            }
+        }
+
+        /* Back to Docs */
+        .back-link {
+            position: fixed;
+            top: 30px;
+            right: 100px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 1000;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        /* Pill container */
+        .pills {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        /* Keyboard hint */
+        .keyboard-hint {
+            position: fixed;
+            bottom: 30px;
+            left: 40px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            opacity: 0.6;
+        }
+
+        .keyboard-hint kbd {
+            background: var(--bg-card);
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            margin: 0 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Logo -->
+    <div class="logo">AceSteps</div>
+
+    <!-- Back to Docs -->
+    <a href="/" class="back-link">
+        ← Back to Docs
+    </a>
+
+    <!-- Navigation Dots -->
+    <nav class="nav" id="nav"></nav>
+
+    <!-- Keyboard Hint -->
+    <div class="keyboard-hint">
+        <kbd>↑</kbd> <kbd>↓</kbd> or scroll to navigate
+    </div>
+
+    <!-- SLIDE 1: Cover -->
+    <section class="slide" id="slide-1">
+        <h1 class="gradient" style="font-size: 5rem;">AceSteps</h1>
+        <p class="tagline">AI-Powered Music Creation & Tokenization Platform</p>
+        <p style="text-align: center; margin-bottom: 30px;">
+            Create music like prompting ChatGPT → Own it like NFTs → Trade it like stocks
+        </p>
+        <div class="pills">
+            <span class="badge badge-primary">Farcaster Mini App</span>
+            <span class="badge badge-primary">Base Network</span>
+            <span class="badge badge-primary">Uniswap V4</span>
+        </div>
+        <a href="#slide-2" class="cta-button">
+            View Pitch →
+        </a>
+        <div class="slide-number">1 / 14</div>
+    </section>
+
+    <!-- SLIDE 2: Problem -->
+    <section class="slide" id="slide-2">
+        <h2>The Problem</h2>
+        <p style="text-align: center; margin-bottom: 40px;">
+            The music industry is broken for creators, fans, and Web3 projects alike.
+        </p>
+        <div class="card-grid card-grid-3">
+            <div class="card">
+                <h3>For Creators</h3>
+                <ul class="feature-list problem-list">
+                    <li>Labels take 80-90% of revenue</li>
+                    <li>High barriers to entry</li>
+                    <li>Expensive equipment needed</li>
+                    <li>No transparent revenue sharing</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>For Fans</h3>
+                <ul class="feature-list problem-list">
+                    <li>No way to invest in artists</li>
+                    <li>No ownership stake in music</li>
+                    <li>Can't share in success</li>
+                    <li>Artists paid fractions of cents</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>For Web3 Projects</h3>
+                <ul class="feature-list problem-list">
+                    <li>Copyright is the #1 problem</li>
+                    <li>Legal liability everywhere</li>
+                    <li>Takedown requests</li>
+                    <li>Licensing nightmares</li>
+                </ul>
+            </div>
+        </div>
+        <div class="slide-number">2 / 14</div>
+    </section>
+
+    <!-- SLIDE 3: Market Stats -->
+    <section class="slide" id="slide-3">
+        <h2>Market Reality</h2>
+        <p style="text-align: center; margin-bottom: 50px;">The numbers tell the story.</p>
+        <div class="card-grid" style="max-width: 900px;">
+            <div class="card stat">
+                <div class="stat-value">$30B+</div>
+                <div class="stat-label">Global Music Streaming Market</div>
+            </div>
+            <div class="card stat">
+                <div class="stat-value">$0.003</div>
+                <div class="stat-label">Spotify pays per stream</div>
+            </div>
+            <div class="card stat">
+                <div class="stat-value">90%</div>
+                <div class="stat-label">Artists never see a return</div>
+            </div>
+            <div class="card stat">
+                <div class="stat-value">$100B+</div>
+                <div class="stat-label">Creator Economy Size</div>
+            </div>
+        </div>
+        <div class="slide-number">3 / 14</div>
+    </section>
+
+    <!-- SLIDE 4: Solution -->
+    <section class="slide" id="slide-4">
+        <h2>Our Solution</h2>
+        <p style="text-align: center; margin-bottom: 40px;">Three pillars that change everything.</p>
+        <div class="card-grid card-grid-3">
+            <div class="card">
+                <h3>🎵 AI Music Creation</h3>
+                <p style="font-size: 1rem;">
+                    Anyone can create professional music using text prompts. No training, no instruments, no studio required.
+                </p>
+                <p style="font-size: 0.9rem; margin-top: 16px; color: var(--primary);">
+                    ~4.5 seconds for 30 seconds of music
+                </p>
+            </div>
+            <div class="card">
+                <h3>🎫 NFT Ownership</h3>
+                <p style="font-size: 1rem;">
+                    Every AI-generated song is minted as an ERC-721 NFT. Creator owns 100% of the copyright, verified on-chain.
+                </p>
+                <p style="font-size: 0.9rem; margin-top: 16px; color: var(--primary);">
+                    Immutable metadata on IPFS
+                </p>
+            </div>
+            <div class="card">
+                <h3>📈 Fractional Investment</h3>
+                <p style="font-size: 1rem;">
+                    Songs tokenized into 100,000 ERC-20 tokens. Fans buy shares, revenue is distributed to all holders.
+                </p>
+                <p style="font-size: 0.9rem; margin-top: 16px; color: var(--primary);">
+                    Liquid market via Uniswap V4
+                </p>
+            </div>
+        </div>
+        <div class="slide-number">4 / 14</div>
+    </section>
+
+    <!-- SLIDE 5: Copyright Solution -->
+    <section class="slide" id="slide-5">
+        <h2>The Copyright Solution</h2>
+        <p style="text-align: center; margin-bottom: 30px;">
+            <span class="highlight">We solved the problem that has plagued every Web3 music project.</span>
+        </p>
+        <div class="card" style="max-width: 900px; margin-bottom: 30px;">
+            <ul class="feature-list">
+                <li><strong>Open-Source AI Model:</strong> ACE-Step, Apache 2.0 licensed - full commercial use</li>
+                <li><strong>No Pre-existing Rights:</strong> Every song is newly created by AI - no sampling</li>
+                <li><strong>Creator-Owned IP:</strong> The generator owns 100% copyright, verified via NFT</li>
+                <li><strong>Signature-Based Minting:</strong> Only platform-generated AI music can be minted</li>
+                <li><strong>Clean Legal Framework:</strong> No licensing fees, no takedowns, no gray areas</li>
+            </ul>
+        </div>
+        <div class="quote">
+            While other Web3 music platforms are fighting legal battles, we're building the future on 100% original, AI-generated content.
+        </div>
+        <div class="slide-number">5 / 14</div>
+    </section>
+
+    <!-- SLIDE 6: True Decentralization -->
+    <section class="slide" id="slide-6">
+        <h2>TRUE Decentralization</h2>
+        <p style="text-align: center; margin-bottom: 40px;">
+            Because we have zero copyright risk, we achieve what no other platform can claim.
+        </p>
+        <div class="comparison">
+            <div class="comparison-side comparison-bad">
+                <h3 style="color: var(--red);">❌ Other "Decentralized" Platforms</h3>
+                <ul class="feature-list problem-list">
+                    <li>Manual content moderation teams</li>
+                    <li>Automated copyright detection</li>
+                    <li>DMCA takedown processes</li>
+                    <li>Legal teams for content</li>
+                    <li>Centralized decision-making</li>
+                </ul>
+            </div>
+            <div class="comparison-side comparison-good">
+                <h3 style="color: var(--green);">✓ AceSteps</h3>
+                <ul class="feature-list">
+                    <li>No external uploads allowed</li>
+                    <li>No copyright moderation needed</li>
+                    <li>No human reviewers</li>
+                    <li>No takedown infrastructure</li>
+                    <li>Fully trustless by design</li>
+                </ul>
+            </div>
+        </div>
+        <div class="slide-number">6 / 14</div>
+    </section>
+
+    <!-- SLIDE 7: How It Works - Creators -->
+    <section class="slide" id="slide-7">
+        <h2>How It Works</h2>
+        <p style="text-align: center; margin-bottom: 20px;">For Creators - 5 Simple Steps</p>
+        <div class="flow">
+            <div class="flow-step">
+                <div class="flow-step-number">1</div>
+                <div class="flow-step-title">CREATE</div>
+                <div class="flow-step-desc">Enter a text prompt</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <div class="flow-step-number">2</div>
+                <div class="flow-step-title">PREVIEW</div>
+                <div class="flow-step-desc">AI generates in seconds</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <div class="flow-step-number">3</div>
+                <div class="flow-step-title">SAVE</div>
+                <div class="flow-step-desc">Mint as NFT</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <div class="flow-step-number">4</div>
+                <div class="flow-step-title">PUBLISH</div>
+                <div class="flow-step-desc">Go public & earn</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <div class="flow-step-number">5</div>
+                <div class="flow-step-title">TOKENIZE</div>
+                <div class="flow-step-desc">Enable fan investment</div>
+            </div>
+        </div>
+        <div class="card" style="max-width: 600px; text-align: center; margin-top: 30px;">
+            <p style="font-size: 1rem; margin: 0;">
+                <strong>Example prompt:</strong> "emotional piano ballad about lost love"<br>
+                <span style="color: var(--green);">→ Professional track in ~4.5 seconds</span>
+            </p>
+        </div>
+        <div class="slide-number">7 / 14</div>
+    </section>
+
+    <!-- SLIDE 8: Tokenomics -->
+    <section class="slide" id="slide-8">
+        <h2>Tokenomics</h2>
+        <p style="text-align: center; margin-bottom: 40px;">Per-song token distribution designed for alignment.</p>
+        <div class="card-grid" style="max-width: 600px;">
+            <div class="card stat">
+                <div class="stat-value">80%</div>
+                <div class="stat-label">To Creator (80,000 tokens)</div>
+            </div>
+            <div class="card stat">
+                <div class="stat-value">20%</div>
+                <div class="stat-label">To Liquidity Pool (20,000 tokens)</div>
+            </div>
+        </div>
+        <div class="card" style="max-width: 800px; margin-top: 40px;">
+            <h3>Why No Unlock Mechanism?</h3>
+            <p style="font-size: 1rem;">
+                Due to AMM mathematics (x × y = k), acquiring 100% of tokens requires <span class="highlight">infinite ETH</span>.
+                The NFT can never be "redeemed" - this creates permanent liquidity and continuous trading opportunity.
+            </p>
+        </div>
+        <div class="slide-number">8 / 14</div>
+    </section>
+
+    <!-- SLIDE 9: Revenue Model -->
+    <section class="slide" id="slide-9">
+        <h2>Revenue Model</h2>
+        <p style="text-align: center; margin-bottom: 40px;">Multiple revenue streams, transparent distribution.</p>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Source</th>
+                        <th>Creator/Token Holders</th>
+                        <th>Platform</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Ad Revenue (Non-tokenized)</td>
+                        <td><span class="highlight-green">80%</span> to Creator</td>
+                        <td>20%</td>
+                    </tr>
+                    <tr>
+                        <td>Ad Revenue (Tokenized)</td>
+                        <td><span class="highlight-green">80%</span> → Pool (price ↑)</td>
+                        <td>20%</td>
+                    </tr>
+                    <tr>
+                        <td>Swap Fees</td>
+                        <td>LP Holders benefit</td>
+                        <td>1% per swap</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card" style="max-width: 700px; margin-top: 30px; text-align: center;">
+            <p style="font-size: 1rem; margin: 0;">
+                <strong>Innovation:</strong> Revenue flows directly to Uniswap pool via <span class="highlight">donate()</span> hook → Token price automatically appreciates
+            </p>
+        </div>
+        <div class="slide-number">9 / 14</div>
+    </section>
+
+    <!-- SLIDE 10: Tech Stack -->
+    <section class="slide" id="slide-10">
+        <h2>Technology Stack</h2>
+        <p style="text-align: center; margin-bottom: 40px;">Built on proven, cutting-edge infrastructure.</p>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Layer</th>
+                        <th>Technology</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Blockchain</td>
+                        <td><span class="highlight">Base (Ethereum L2)</span></td>
+                        <td>Low fees (~$0.01), fast transactions</td>
+                    </tr>
+                    <tr>
+                        <td>DEX</td>
+                        <td><span class="highlight">Uniswap V4</span></td>
+                        <td>Trading, liquidity, revenue hooks</td>
+                    </tr>
+                    <tr>
+                        <td>AI Model</td>
+                        <td><span class="highlight">ACE-Step 3.5B</span></td>
+                        <td>Music generation (Apache 2.0)</td>
+                    </tr>
+                    <tr>
+                        <td>Platform</td>
+                        <td><span class="highlight">Farcaster Mini App</span></td>
+                        <td>Social + Mobile native</td>
+                    </tr>
+                    <tr>
+                        <td>Standards</td>
+                        <td><span class="highlight">ERC-721 / ERC-20</span></td>
+                        <td>NFT ownership / Fractional shares</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="slide-number">10 / 14</div>
+    </section>
+
+    <!-- SLIDE 11: Competition -->
+    <section class="slide" id="slide-11">
+        <h2>Competitive Landscape</h2>
+        <p style="text-align: center; margin-bottom: 30px;">We have features no one else can offer.</p>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>AceSteps</th>
+                        <th>Audius</th>
+                        <th>Royal</th>
+                        <th>Sound.xyz</th>
+                        <th>Spotify</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>AI Music Creation</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                    </tr>
+                    <tr>
+                        <td>Copyright-Free</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                    </tr>
+                    <tr>
+                        <td>Truly Decentralized</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                    </tr>
+                    <tr>
+                        <td>Fractional Ownership</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                    </tr>
+                    <tr>
+                        <td>On-chain Revenue</td>
+                        <td><span class="check">✓</span></td>
+                        <td>Partial</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="cross">✗</span></td>
+                    </tr>
+                    <tr>
+                        <td>Legal Risk</td>
+                        <td><span class="highlight-green">None</span></td>
+                        <td><span class="highlight-orange">High</span></td>
+                        <td><span class="highlight-orange">High</span></td>
+                        <td><span class="highlight-orange">Medium</span></td>
+                        <td>N/A</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="slide-number">11 / 14</div>
+    </section>
+
+    <!-- SLIDE 12: Market Opportunity -->
+    <section class="slide" id="slide-12">
+        <h2>Market Opportunity</h2>
+        <p style="text-align: center; margin-bottom: 40px;">Massive addressable market at the intersection of three trends.</p>
+        <div class="card-grid card-grid-3">
+            <div class="card stat">
+                <div class="stat-value">$200B+</div>
+                <div class="stat-label">TAM</div>
+                <p style="font-size: 0.85rem; margin-top: 10px;">Music + Creator Economy + NFTs</p>
+            </div>
+            <div class="card stat">
+                <div class="stat-value">$50B</div>
+                <div class="stat-label">SAM</div>
+                <p style="font-size: 0.85rem; margin-top: 10px;">Digital streaming + Music NFTs + AI content</p>
+            </div>
+            <div class="card stat">
+                <div class="stat-value">$1B</div>
+                <div class="stat-label">SOM</div>
+                <p style="font-size: 0.85rem; margin-top: 10px;">Web3-native users + Farcaster/Base ecosystem</p>
+            </div>
+        </div>
+        <div class="pills" style="margin-top: 40px;">
+            <span class="badge badge-green">AI Music Exploding</span>
+            <span class="badge badge-green">Base Momentum</span>
+            <span class="badge badge-green">Farcaster Growing</span>
+            <span class="badge badge-green">Creator Economy +20% YoY</span>
+        </div>
+        <div class="slide-number">12 / 14</div>
+    </section>
+
+    <!-- SLIDE 13: Roadmap -->
+    <section class="slide" id="slide-13">
+        <h2>Roadmap & Traction</h2>
+        <p style="text-align: center; margin-bottom: 40px;">Built and ready to scale.</p>
+        <div class="card-grid" style="max-width: 1000px;">
+            <div class="card">
+                <h3 style="color: var(--green);">Phase 1: Core ✓</h3>
+                <ul class="feature-list">
+                    <li>AI Music Generation</li>
+                    <li>SongNFT.sol deployed</li>
+                    <li>IPFS metadata</li>
+                    <li>Core UI complete</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3 style="color: var(--orange);">Phase 2: Tokenization</h3>
+                <ul class="feature-list" style="opacity: 0.8;">
+                    <li>SongVault.sol</li>
+                    <li>SongToken factory</li>
+                    <li>Uniswap V4 pools</li>
+                    <li>Trading UI</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3 style="color: var(--text-muted);">Phase 3: Revenue</h3>
+                <ul class="feature-list" style="opacity: 0.6;">
+                    <li>SongRevenueHook.sol</li>
+                    <li>Ad integration</li>
+                    <li>Auto donate()</li>
+                    <li>Analytics</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3 style="color: var(--text-muted);">Phase 4: Launch</h3>
+                <ul class="feature-list" style="opacity: 0.6;">
+                    <li>Security audit</li>
+                    <li>Mainnet deploy</li>
+                    <li>Community</li>
+                    <li>Marketing push</li>
+                </ul>
+            </div>
+        </div>
+        <div class="slide-number">13 / 14</div>
+    </section>
+
+    <!-- SLIDE 14: Thank You -->
+    <section class="slide" id="slide-14">
+        <h1 class="gradient">Thank You</h1>
+        <div class="quote" style="margin-bottom: 40px;">
+            They have lawyers. We have math.<br>
+            <span style="font-size: 1.25rem; color: var(--text-muted);">Our signature-based minting makes piracy architecturally impossible.</span>
+        </div>
+        <div class="card-grid" style="max-width: 600px;">
+            <div class="card" style="text-align: center;">
+                <h3>Documentation</h3>
+                <a href="/" style="color: var(--primary); text-decoration: none;">docs.acesteps.xyz</a>
+            </div>
+            <div class="card" style="text-align: center;">
+                <h3>Follow Us</h3>
+                <a href="https://warpcast.com/acesteps" style="color: var(--primary); text-decoration: none;">@acesteps on Farcaster</a>
+            </div>
+        </div>
+        <a href="/" class="cta-button">
+            ← Back to Documentation
+        </a>
+        <div class="slide-number">14 / 14</div>
+    </section>
+
+    <script>
+        // Generate navigation dots
+        const slides = document.querySelectorAll('.slide');
+        const nav = document.getElementById('nav');
+        const progressBar = document.getElementById('progressBar');
+
+        slides.forEach((slide, index) => {
+            const dot = document.createElement('div');
+            dot.className = 'nav-dot';
+            dot.addEventListener('click', () => {
+                slide.scrollIntoView({ behavior: 'smooth' });
+            });
+            nav.appendChild(dot);
+        });
+
+        const navDots = document.querySelectorAll('.nav-dot');
+
+        // Update active dot and progress bar on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const index = Array.from(slides).indexOf(entry.target);
+                    navDots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i === index);
+                    });
+                    // Update progress bar
+                    const progress = ((index + 1) / slides.length) * 100;
+                    progressBar.style.width = progress + '%';
+                }
+            });
+        }, { threshold: 0.5 });
+
+        slides.forEach(slide => observer.observe(slide));
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const currentSlide = Array.from(slides).findIndex(slide => {
+                const rect = slide.getBoundingClientRect();
+                return rect.top >= -100 && rect.top <= 100;
+            });
+
+            if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+                e.preventDefault();
+                if (currentSlide < slides.length - 1) {
+                    slides[currentSlide + 1].scrollIntoView({ behavior: 'smooth' });
+                }
+            } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+                e.preventDefault();
+                if (currentSlide > 0) {
+                    slides[currentSlide - 1].scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+
+        // Set first dot as active on load
+        navDots[0].classList.add('active');
+    </script>
+</body>
+</html>
