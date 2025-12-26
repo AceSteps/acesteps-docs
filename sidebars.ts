@@ -177,6 +177,7 @@ const sidebars: SidebarsConfig = {
         'learn/welcome',
         'learn/how-it-works',
         'learn/tokenomics',
+        'learn/why-acesteps',
         'learn/faq',
       ],
     },
@@ -190,6 +191,7 @@ const sidebars: SidebarsConfig = {
       collapsed: false,
       items: [
         'api-reference/overview',
+        'api-reference/authentication',
         'api-reference/backend-api',
         'api-reference/contract-abi',
       ],
