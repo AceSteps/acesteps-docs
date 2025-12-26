@@ -1,0 +1,160 @@
+import {themes as prismThemes} from 'prism-react-renderer';
+import type {Config} from '@docusaurus/types';
+import type * as Preset from '@docusaurus/preset-classic';
+
+const config: Config = {
+  title: 'AceSteps Documentation',
+  tagline: 'AI-Powered Music Creation & Tokenization Platform',
+  favicon: 'img/favicon.ico',
+
+  future: {
+    v4: true,
+  },
+
+  url: 'https://docs.acesteps.xyz',
+  baseUrl: '/',
+
+  organizationName: 'acesteps',
+  projectName: 'acesteps-docs',
+
+  onBrokenLinks: 'throw',
+
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en'],
+  },
+
+  themes: [
+    [
+      '@easyops-cn/docusaurus-search-local',
+      {
+        hashed: true,
+        language: ['en'],
+        highlightSearchTermsOnTargetPage: true,
+        docsRouteBasePath: '/',
+        indexBlog: false,
+      },
+    ],
+  ],
+
+  presets: [
+    [
+      'classic',
+      {
+        docs: {
+          sidebarPath: './sidebars.ts',
+          routeBasePath: '/',
+          editUrl: 'https://github.com/Batuhan4/acesteps-docs/edit/main/',
+          breadcrumbs: true,
+        },
+        blog: false,
+        theme: {
+          customCss: './src/css/custom.css',
+        },
+      } satisfies Preset.Options,
+    ],
+  ],
+
+  themeConfig: {
+    image: 'img/acesteps-social-card.jpg',
+    colorMode: {
+      defaultMode: 'dark',
+      disableSwitch: false,
+      respectPrefersColorScheme: true,
+    },
+    tableOfContents: {
+      minHeadingLevel: 2,
+      maxHeadingLevel: 4,
+    },
+    navbar: {
+      title: 'AceSteps',
+      logo: {
+        alt: 'AceSteps Logo',
+        src: 'img/logo.svg',
+      },
+      items: [
+        {
+          to: '/get-started/overview',
+          label: 'Get Started',
+          position: 'left',
+          activeBaseRegex: '/get-started/',
+        },
+        {
+          to: '/music-creation/overview',
+          label: 'Music Creation',
+          position: 'left',
+          activeBaseRegex: '/music-creation/',
+        },
+        {
+          to: '/tokenization/overview',
+          label: 'Tokenization',
+          position: 'left',
+          activeBaseRegex: '/tokenization/',
+        },
+        {
+          to: '/smart-contracts/overview',
+          label: 'Contracts',
+          position: 'left',
+          activeBaseRegex: '/smart-contracts/',
+        },
+        {
+          to: '/trading/overview',
+          label: 'Trading',
+          position: 'left',
+          activeBaseRegex: '/trading/',
+        },
+        {
+          to: '/cookbook/create-first-song',
+          label: 'Cookbook',
+          position: 'left',
+          activeBaseRegex: '/cookbook/',
+        },
+        {
+          href: 'https://discord.gg/acesteps',
+          label: 'Discord',
+          position: 'right',
+        },
+        {
+          href: 'https://github.com/Batuhan4/acesteps-docs',
+          label: 'GitHub',
+          position: 'right',
+        },
+      ],
+    },
+    footer: {
+      style: 'dark',
+      links: [
+        {
+          title: 'Docs',
+          items: [
+            {label: 'Get Started', to: '/get-started/overview'},
+            {label: 'Cookbook', to: '/cookbook/create-first-song'},
+            {label: 'API Reference', to: '/api-reference/overview'},
+          ],
+        },
+        {
+          title: 'Community',
+          items: [
+            {label: 'Farcaster', href: 'https://warpcast.com/acesteps'},
+            {label: 'Discord', href: 'https://discord.gg/acesteps'},
+          ],
+        },
+        {
+          title: 'More',
+          items: [
+            {label: 'GitHub', href: 'https://github.com/Batuhan4/acesteps-docs'},
+            {label: 'Base Network', href: 'https://base.org'},
+          ],
+        },
+      ],
+      copyright: `Copyright ${new Date().getFullYear()} AceSteps. Built on Base.`,
+    },
+    prism: {
+      theme: prismThemes.github,
+      darkTheme: prismThemes.dracula,
+      additionalLanguages: ['solidity', 'bash', 'json'],
+    },
+  } satisfies Preset.ThemeConfig,
+};
+
+export default config;
