@@ -47,8 +47,6 @@ const config: Config = {
           routeBasePath: '/',
           editUrl: 'https://github.com/Batuhan4/acesteps-docs/edit/main/',
           breadcrumbs: true,
-          showLastUpdateTime: true,
-          showLastUpdateAuthor: true,
         },
         blog: false,
         theme: {
