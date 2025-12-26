@@ -38,7 +38,7 @@ Currently, AceSteps uses the base ACE-Step model:
 
 ## Stay Updated
 
-Join our [Discord](https://discord.gg/acesteps) for updates on custom model support.
+Follow [@acesteps](https://warpcast.com/acesteps) on Farcaster for updates on custom model support.
 
 ## Related
 

@@ -148,11 +148,6 @@ const config: Config = {
           activeBaseRegex: '/cookbook/',
         },
         {
-          href: 'https://discord.gg/acesteps',
-          label: 'Discord',
-          position: 'right',
-        },
-        {
           href: 'https://github.com/Batuhan4/acesteps-docs',
           label: 'GitHub',
           position: 'right',
@@ -174,7 +169,7 @@ const config: Config = {
           title: 'Community',
           items: [
             {label: 'Farcaster', href: 'https://warpcast.com/acesteps'},
-            {label: 'Discord', href: 'https://discord.gg/acesteps'},
+            {label: 'Twitter/X', href: 'https://x.com/acesteps'},
           ],
         },
         {

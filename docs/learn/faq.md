@@ -377,8 +377,8 @@ Try:
 
 ### How do I get help?
 
-- **Discord**: Join our [Discord server](https://discord.gg/acesteps) for community support
-- **Farcaster**: Follow [@acesteps](https://warpcast.com/acesteps) for updates
+- **Farcaster**: Follow [@acesteps](https://warpcast.com/acesteps) for updates and community support
+- **Twitter/X**: Follow [@acesteps](https://x.com/acesteps) for announcements
 - **GitHub**: Open an [issue](https://github.com/Batuhan4/acesteps-docs/issues) for bugs or feature requests
 
 ### I found a bug. How do I report it?
@@ -398,7 +398,7 @@ Yes! AceSteps is open source. You can:
 - Report bugs
 - Suggest features
 - Improve documentation
-- Help other users in Discord
+- Help other users on Farcaster
 
 ---
 
