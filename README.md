@@ -9,7 +9,7 @@
 [![Built on Base](https://img.shields.io/badge/Built%20on-Base-0052FF?style=for-the-badge&logo=coinbase&logoColor=white)](https://base.org)
 [![Farcaster](https://img.shields.io/badge/Farcaster-8A63D2?style=for-the-badge&logo=farcaster&logoColor=white)](https://warpcast.com/acesteps)
 
-[**Live Documentation**](https://acesteps-docs-b8j30poou-efes-projects-42ddc5f6.vercel.app) · [**Pitch Deck**](https://acesteps-docs-b8j30poou-efes-projects-42ddc5f6.vercel.app/pitch-deck.html) · [**Website**](https://acesteps.xyz) · [**Farcaster**](https://warpcast.com/acesteps) · [**Twitter/X**](https://x.com/acesteps)
+[**Live Documentation**](https://acesteps-docs-b8j30poou-efes-projects-42ddc5f6.vercel.app) · [**Pitch Deck**](https://acesteps-docs-b8j30poou-efes-projects-42ddc5f6.vercel.app/pitch-deck.html) · [**Website**](https://acesteps.com) · [**Farcaster**](https://warpcast.com/acestep)
 
 ---
 
