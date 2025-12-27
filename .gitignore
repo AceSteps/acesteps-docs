@@ -10,13 +10,38 @@
 
 # Misc
 .DS_Store
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment
+.env
 .env.local
+.env*.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Vercel
 .vercel
-.env*.local
+
+# Internal/Planning Documents (not for public)
+1-phase.md
+2-phase.md
+3-phase.md
+4-phase.md
+5-phase.md
+6-phase.md
+AI_PROJECT_CONTEXT.md
+PITCH_DECK_CONTEXT.md
+PRD.md
+CLAUDE.md
+
+# Source images in root (copies exist in static/)
+/*.png
+/*.jpg
+/*.jpeg
+/*.HEIC
+
+# Claude
+.claude
