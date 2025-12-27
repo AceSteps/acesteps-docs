@@ -3,99 +3,377 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AceSteps - Pitch Deck</title>
-    <link rel="icon" href="/img/favicon.ico">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>AceSteps: AI & Web3 Music Investment</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://code.iconify.design/iconify-icon/1.0.8/iconify-icon.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         :root {
-            --primary: #3b82f6;
-            --primary-dark: #2563eb;
-            --secondary: #8b5cf6;
-            --accent: #00d4ff;
-            --orange: #f97316;
-            --green: #22c55e;
-            --red: #ef4444;
-            --bg-dark: #0a0a0a;
-            --bg-card: #141414;
-            --text: #ffffff;
-            --text-muted: #a1a1aa;
-            --border: #27272a;
+            /* Dark Theme - Music/Web3 Aesthetic */
+            --bg-primary: #0D0D0D;
+            --bg-secondary: #1A1A2E;
+            --bg-card: #16213E;
+            --primary-orange: #FF6B00;
+            --accent-blue: #00D4FF;
+            --accent-purple: #7B2CBF;
+            --text-primary: #FFFFFF;
+            --text-muted: #94A3B8;
+            --text-dim: #64748B;
+            --border-color: #2D3748;
+            --success: #22C55E;
+            --danger: #EF4444;
         }
 
-        html {
-            scroll-behavior: smooth;
-            scroll-snap-type: y mandatory;
-        }
+        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-dark);
-            color: var(--text);
-            overflow-x: hidden;
-        }
-
-        /* Slide Container */
-        .slide {
-            min-height: 100vh;
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 60px 80px;
-            position: relative;
+            background-color: #000;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
             overflow: hidden;
         }
 
-        .slide::before {
+        /* Presentation Mode */
+        .presentation-wrapper {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0D0D0D 0%, #1A1A2E 100%);
+        }
+
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
+            position: relative;
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            padding: 60px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+        }
+
+        .slide-container.active {
+            display: flex;
+        }
+
+        /* Decorative Elements */
+        .decor-blob {
+            position: absolute;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.3;
+        }
+
+        .decor-glow {
+            position: absolute;
+            background: radial-gradient(circle, var(--primary-orange) 0%, transparent 70%);
+            filter: blur(60px);
+            opacity: 0.15;
+        }
+
+        /* Typography */
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; margin: 0; }
+
+        .slide-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            border-left: 6px solid var(--primary-orange);
+            padding-left: 25px;
+            line-height: 1.1;
+            text-shadow: 0 0 40px rgba(255, 107, 0, 0.3);
+        }
+
+        .slide-title span {
+            color: var(--primary-orange);
+        }
+
+        p { font-size: 20px; line-height: 1.7; color: var(--text-muted); margin: 0 0 15px 0; }
+
+        /* Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            height: 100%;
+        }
+
+        .app-screenshot {
+            border-radius: 24px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(255, 107, 0, 0.1);
+            border: 3px solid var(--border-color);
+            max-height: 520px;
+            width: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Content Blocks */
+        .feature-box {
+            background: linear-gradient(135deg, var(--bg-card) 0%, rgba(22, 33, 62, 0.5) 100%);
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-box h3 {
+            color: var(--accent-blue);
+            margin-bottom: 8px;
+            font-size: 20px;
+        }
+
+        .feature-box p { font-size: 16px; margin: 0; }
+
+        /* Stats */
+        .big-number {
+            font-size: 100px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-orange) 0%, #FF9500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            text-shadow: 0 0 60px rgba(255, 107, 0, 0.5);
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .stat-card .value {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary-orange);
+            margin-bottom: 8px;
+        }
+
+        .stat-card .label {
+            font-size: 14px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        thead tr {
+            background: linear-gradient(90deg, var(--primary-orange) 0%, #FF9500 100%);
+        }
+
+        th {
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+            color: white;
+        }
+
+        td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: rgba(255, 107, 0, 0.05);
+        }
+
+        /* Lists */
+        ul.check-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul.check-list li {
+            margin-bottom: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 18px;
+            color: var(--text-muted);
+        }
+
+        ul.check-list li i {
+            color: var(--success);
+            margin-top: 4px;
+        }
+
+        /* Team Cards */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .team-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            text-align: center;
+        }
+
+        .team-card .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--accent-purple) 100%);
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+        }
+
+        .team-card h3 {
+            color: var(--text-primary);
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .team-card .role {
+            color: var(--primary-orange);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .team-card p {
+            font-size: 14px;
+            color: var(--text-dim);
+        }
+
+        /* Roadmap */
+        .roadmap-container {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 60px;
+        }
+
+        .roadmap-container::before {
             content: '';
             position: absolute;
-            top: 0;
+            top: 40px;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(ellipse at top, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
-            pointer-events: none;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-orange) 0%, var(--accent-blue) 100%);
+            opacity: 0.3;
+        }
+
+        .roadmap-item {
+            width: 22%;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .roadmap-dot {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--primary-orange);
+            margin: 28px auto 20px;
+            box-shadow: 0 0 20px var(--primary-orange);
+            border: 3px solid var(--bg-primary);
+        }
+
+        .roadmap-dot.future {
+            background: var(--accent-blue);
+            box-shadow: 0 0 20px var(--accent-blue);
+        }
+
+        /* Footer */
+        .slide-footer {
+            position: absolute;
+            bottom: 30px;
+            left: 60px;
+            right: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            color: var(--text-dim);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         /* Navigation */
-        .nav {
+        .nav-controls {
             position: fixed;
-            right: 30px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 1000;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
-            flex-direction: column;
-            gap: 12px;
+            align-items: center;
+            gap: 20px;
+            background: rgba(26, 26, 46, 0.9);
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
         }
 
-        .nav-dot {
-            width: 12px;
-            height: 12px;
+        .nav-btn {
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            background: var(--border);
+            border: 2px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-primary);
             cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
         }
 
-        .nav-dot:hover {
-            background: var(--primary);
-            transform: scale(1.2);
+        .nav-btn:hover {
+            background: var(--primary-orange);
+            border-color: var(--primary-orange);
         }
 
-        .nav-dot.active {
-            background: var(--primary);
-            border-color: var(--secondary);
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        .slide-counter {
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 600;
+            min-width: 60px;
+            text-align: center;
         }
 
         /* Progress Bar */
@@ -103,1085 +381,882 @@
             position: fixed;
             top: 0;
             left: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            z-index: 1001;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-orange) 0%, var(--accent-blue) 100%);
             transition: width 0.3s ease;
+            z-index: 1000;
         }
 
-        /* Slide Number */
-        .slide-number {
-            position: absolute;
-            bottom: 30px;
-            right: 40px;
-            font-size: 14px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        /* Typography */
-        h1 {
-            font-size: 4.5rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 24px;
-            background: linear-gradient(135deg, var(--text) 0%, var(--text-muted) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        h1.gradient {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        h2 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--text);
-        }
-
-        h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: var(--primary);
-        }
-
-        p {
-            font-size: 1.25rem;
-            line-height: 1.7;
-            color: var(--text-muted);
-            max-width: 800px;
-        }
-
-        .tagline {
-            font-size: 1.75rem;
-            font-weight: 500;
-            color: var(--text-muted);
-            margin-bottom: 40px;
-        }
-
-        .highlight {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .highlight-orange {
-            color: var(--orange);
-            font-weight: 600;
-        }
-
-        .highlight-green {
-            color: var(--green);
-            font-weight: 600;
-        }
-
-        /* Cards */
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 32px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-
-        .card:hover {
-            border-color: var(--primary);
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            width: 100%;
-            max-width: 1200px;
-        }
-
-        .card-grid-3 {
-            grid-template-columns: repeat(3, 1fr);
-        }
-
-        /* Stats */
-        .stat {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 3.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            color: var(--text-muted);
-            margin-top: 8px;
-        }
-
-        /* Lists */
-        .feature-list {
-            list-style: none;
-            text-align: left;
-        }
-
-        .feature-list li {
+        /* Use of Funds Chart */
+        .funds-chart {
             display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 16px;
-            font-size: 1.1rem;
-            color: var(--text-muted);
+            flex-direction: column;
+            gap: 16px;
         }
 
-        .feature-list li::before {
-            content: '✓';
-            color: var(--green);
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .problem-list li::before {
-            content: '✗';
-            color: var(--red);
-        }
-
-        /* Tables */
-        .table-container {
-            width: 100%;
-            max-width: 1000px;
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 1rem;
-        }
-
-        th, td {
-            padding: 16px 20px;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-        }
-
-        th {
-            background: var(--bg-card);
-            color: var(--text);
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 0.05em;
-        }
-
-        td {
-            color: var(--text-muted);
-        }
-
-        tr:hover td {
-            background: rgba(59, 130, 246, 0.05);
-        }
-
-        .check {
-            color: var(--green);
-            font-size: 1.2rem;
-        }
-
-        .cross {
-            color: var(--red);
-            font-size: 1.2rem;
-        }
-
-        /* Flow Diagram */
-        .flow {
+        .fund-bar {
             display: flex;
             align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin: 40px 0;
+            gap: 16px;
         }
 
-        .flow-step {
+        .fund-bar .label {
+            width: 140px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .fund-bar .bar {
+            flex: 1;
+            height: 32px;
             background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px 30px;
-            text-align: center;
-            min-width: 150px;
+            border-radius: 8px;
+            overflow: hidden;
         }
 
-        .flow-step-number {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--primary);
+        .fund-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-orange) 0%, #FF9500 100%);
+            display: flex;
+            align-items: center;
+            padding-left: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+        }
+
+        /* Market Stats */
+        .market-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .market-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            padding: 24px;
+        }
+
+        .market-card .label {
+            font-size: 12px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
             margin-bottom: 8px;
         }
 
-        .flow-step-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text);
+        .market-card .value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-orange);
             margin-bottom: 4px;
         }
 
-        .flow-step-desc {
-            font-size: 0.9rem;
+        .market-card .sublabel {
+            font-size: 13px;
             color: var(--text-muted);
-        }
-
-        .flow-arrow {
-            font-size: 2rem;
-            color: var(--primary);
-        }
-
-        /* Quote */
-        .quote {
-            font-size: 1.75rem;
-            font-style: italic;
-            color: var(--text);
-            text-align: center;
-            max-width: 900px;
-            line-height: 1.6;
-            position: relative;
-            padding: 40px;
-        }
-
-        .quote::before {
-            content: '"';
-            position: absolute;
-            top: 0;
-            left: 0;
-            font-size: 6rem;
-            color: var(--primary);
-            opacity: 0.3;
-            font-family: Georgia, serif;
-            line-height: 1;
-        }
-
-        /* Badges */
-        .badge {
-            display: inline-block;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin: 4px;
-        }
-
-        .badge-primary {
-            background: rgba(59, 130, 246, 0.2);
-            color: var(--primary);
-            border: 1px solid var(--primary);
-        }
-
-        .badge-green {
-            background: rgba(34, 197, 94, 0.2);
-            color: var(--green);
-            border: 1px solid var(--green);
-        }
-
-        .badge-orange {
-            background: rgba(249, 115, 22, 0.2);
-            color: var(--orange);
-            border: 1px solid var(--orange);
-        }
-
-        /* CTA Button */
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 16px 32px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            text-decoration: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin-top: 30px;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .animate-in {
-            animation: fadeInUp 0.8s ease forwards;
-        }
-
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
-        .delay-4 { animation-delay: 0.4s; }
-
-        /* Comparison */
-        .comparison {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            width: 100%;
-            max-width: 1000px;
-        }
-
-        .comparison-side {
-            padding: 30px;
-            border-radius: 16px;
-        }
-
-        .comparison-bad {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-        }
-
-        .comparison-good {
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-        }
-
-        /* Logo */
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            position: fixed;
-            top: 30px;
-            left: 40px;
-            z-index: 1000;
-        }
-
-        .logo img {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-        }
-
-        /* Architecture Diagram */
-        .architecture {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 40px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            white-space: pre;
-            overflow-x: auto;
-            max-width: 100%;
-        }
-
-        /* Revenue Flow */
-        .revenue-flow {
-            text-align: center;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .slide {
-                padding: 40px 30px;
-            }
-
-            h1 {
-                font-size: 3rem;
-            }
-
-            h2 {
-                font-size: 2rem;
-            }
-
-            .card-grid-3 {
-                grid-template-columns: 1fr;
-            }
-
-            .comparison {
-                grid-template-columns: 1fr;
-            }
-
-            .nav {
-                right: 15px;
-            }
-
-            .flow {
-                flex-direction: column;
-            }
-
-            .flow-arrow {
-                transform: rotate(90deg);
-            }
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-
-            .tagline {
-                font-size: 1.25rem;
-            }
-
-            p {
-                font-size: 1rem;
-            }
-
-            .stat-value {
-                font-size: 2.5rem;
-            }
-
-            .quote {
-                font-size: 1.25rem;
-                padding: 20px;
-            }
-        }
-
-        /* Back to Docs */
-        .back-link {
-            position: fixed;
-            top: 30px;
-            right: 100px;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            z-index: 1000;
-            transition: color 0.3s ease;
-        }
-
-        .back-link:hover {
-            color: var(--primary);
-        }
-
-        /* Pill container */
-        .pills {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        /* Keyboard hint */
-        .keyboard-hint {
-            position: fixed;
-            bottom: 30px;
-            left: 40px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            opacity: 0.6;
-        }
-
-        .keyboard-hint kbd {
-            background: var(--bg-card);
-            padding: 4px 8px;
-            border-radius: 4px;
-            border: 1px solid var(--border);
-            margin: 0 2px;
         }
     </style>
 </head>
 <body>
-    <!-- Progress Bar -->
-    <div class="progress-bar" id="progressBar"></div>
 
-    <!-- Logo -->
-    <div class="logo"><img src="/img/logo.png" alt="AceSteps">AceSteps</div>
+<div class="progress-bar" id="progressBar"></div>
 
-    <!-- Back to Docs -->
-    <a href="/" class="back-link">
-        ← Back to Docs
-    </a>
+<div class="presentation-wrapper">
 
-    <!-- Navigation Dots -->
-    <nav class="nav" id="nav"></nav>
-
-    <!-- Keyboard Hint -->
-    <div class="keyboard-hint">
-        <kbd>↑</kbd> <kbd>↓</kbd> or scroll to navigate
+<!-- SLIDE 1: COVER -->
+<div class="slide-container active" id="slide-1">
+    <div class="decor-blob" style="width: 800px; height: 800px; background: var(--primary-orange); top: -300px; right: -200px;"></div>
+    <div class="decor-blob" style="width: 600px; height: 600px; background: var(--accent-purple); bottom: -200px; left: -100px;"></div>
+    <div style="text-align: center; margin: auto; position: relative; z-index: 1;">
+        <div style="width: 160px; height: 160px; border-radius: 40px; margin: 0 auto 30px; background: linear-gradient(135deg, var(--primary-orange) 0%, #FF9500 100%); display: flex; align-items: center; justify-content: center; box-shadow: 0 20px 60px rgba(255, 107, 0, 0.4);">
+            <i class="fa-solid fa-music" style="font-size: 70px; color: white;"></i>
+        </div>
+        <h1 style="font-size: 90px; margin-bottom: 10px; font-weight: 800;">AceSteps</h1>
+        <p style="font-size: 32px; color: var(--primary-orange); font-weight: 600; margin-bottom: 20px;">The First AI-Native Music Economy</p>
+        <p style="font-size: 20px; color: var(--text-muted); margin-bottom: 40px;">Create. Own. Earn.</p>
+        <div style="display: flex; justify-content: center; gap: 40px; margin-top: 20px;">
+            <div style="background: var(--bg-card); padding: 12px 24px; border-radius: 30px; border: 1px solid var(--border-color);">
+                <span style="color: var(--accent-blue);"><i class="fa-solid fa-cube"></i></span>
+                <span style="margin-left: 8px; color: var(--text-muted);">Farcaster Mini-App</span>
+            </div>
+            <div style="background: var(--bg-card); padding: 12px 24px; border-radius: 30px; border: 1px solid var(--border-color);">
+                <span style="color: var(--accent-blue);"><i class="fa-solid fa-link"></i></span>
+                <span style="margin-left: 8px; color: var(--text-muted);">Built on Base Network</span>
+            </div>
+        </div>
     </div>
+</div>
 
-    <!-- SLIDE 1: Cover -->
-    <section class="slide" id="slide-1">
-        <h1 class="gradient" style="font-size: 5rem;">AceSteps</h1>
-        <p class="tagline">AI-Powered Music Creation & Tokenization Platform</p>
-        <p style="text-align: center; margin-bottom: 30px;">
-            Create music like prompting ChatGPT → Own it like NFTs → Trade it like stocks
-        </p>
-        <div class="pills">
-            <span class="badge badge-primary">Farcaster Mini App</span>
-            <span class="badge badge-primary">Base Network</span>
-            <span class="badge badge-primary">Uniswap V4</span>
+<!-- SLIDE 2: THE PROBLEM -->
+<div class="slide-container" id="slide-2">
+    <div class="decor-glow" style="width: 400px; height: 400px; top: -100px; right: -100px;"></div>
+    <h2 class="slide-title">The Industry <span>Barrier</span></h2>
+    <div class="grid-2">
+        <div>
+            <div class="big-number">99%</div>
+            <p style="font-size: 26px; color: var(--text-primary); font-weight: 600; margin-top: 16px;">of people lack the skills to create music.</p>
+            <p style="margin-top: 20px;">Traditional platforms pay artists only <strong style="color: var(--danger);">$0.003 per stream</strong> while gatekeepers take 90%. Fans are passive consumers with no ownership.</p>
+            <div style="margin-top: 30px; padding: 20px; background: rgba(239, 68, 68, 0.1); border-radius: 12px; border-left: 4px solid var(--danger);">
+                <p style="margin: 0; color: var(--text-primary); font-size: 16px;"><strong>$424M</strong> in unmatched royalties sitting with the Mechanical Licensing Collective</p>
+            </div>
         </div>
-        <a href="#slide-2" class="cta-button">
-            View Pitch →
-        </a>
-        <div class="slide-number">1 / 14</div>
-    </section>
+        <div style="text-align: center;">
+            <div style="background: var(--bg-card); padding: 50px; border-radius: 24px; border: 1px solid var(--border-color);">
+                <i class="fa-solid fa-gavel" style="font-size: 80px; color: var(--danger); margin-bottom: 24px;"></i>
+                <h3 style="font-size: 28px; margin-bottom: 16px;">Copyright Gridlock</h3>
+                <p style="font-size: 16px;">Every Web3 music project faces legal liability from external uploads. <strong style="color: var(--primary-orange);">AceSteps solves this at the protocol level.</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <!-- SLIDE 2: Problem -->
-    <section class="slide" id="slide-2">
-        <h2>The Problem</h2>
-        <p style="text-align: center; margin-bottom: 40px;">
-            The music industry is broken for creators, fans, and Web3 projects alike.
-        </p>
-        <div class="card-grid card-grid-3">
-            <div class="card">
-                <h3>For Creators</h3>
-                <ul class="feature-list problem-list">
-                    <li>Labels take 80-90% of revenue</li>
-                    <li>High barriers to entry</li>
-                    <li>Expensive equipment needed</li>
-                    <li>No transparent revenue sharing</li>
+<!-- SLIDE 3: MARKET OPPORTUNITY -->
+<div class="slide-container" id="slide-3">
+    <div class="decor-glow" style="width: 500px; height: 500px; bottom: -150px; left: -150px;"></div>
+    <h2 class="slide-title">Market <span>Opportunity</span></h2>
+    <div style="position: relative; z-index: 1;">
+        <div class="market-grid" style="margin-bottom: 30px;">
+            <div class="market-card">
+                <div class="label">Total Addressable Market</div>
+                <div class="value">$200B+</div>
+                <div class="sublabel">Global music + creator economy</div>
+            </div>
+            <div class="market-card">
+                <div class="label">Serviceable Market</div>
+                <div class="value">$50B</div>
+                <div class="sublabel">Digital streaming + Music NFTs</div>
+            </div>
+            <div class="market-card">
+                <div class="label">Obtainable Market</div>
+                <div class="value">$1B</div>
+                <div class="sublabel">Web3-native music consumers</div>
+            </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+            <div style="background: var(--bg-card); border-radius: 16px; padding: 24px; border: 1px solid var(--border-color);">
+                <h3 style="color: var(--accent-blue); margin-bottom: 16px;"><i class="fa-solid fa-chart-line"></i> AI Music Generation</h3>
+                <p style="font-size: 16px; margin: 0;">Growing at <strong style="color: var(--primary-orange);">30%+ CAGR</strong> from $570M (2024) to $2.8B (2030)</p>
+            </div>
+            <div style="background: var(--bg-card); border-radius: 16px; padding: 24px; border: 1px solid var(--border-color);">
+                <h3 style="color: var(--accent-blue); margin-bottom: 16px;"><i class="fa-solid fa-headphones"></i> Music Streaming</h3>
+                <p style="font-size: 16px; margin: 0;">$46B (2024) to <strong style="color: var(--primary-orange);">$108B (2030)</strong> at 14.9% CAGR</p>
+            </div>
+            <div style="background: var(--bg-card); border-radius: 16px; padding: 24px; border: 1px solid var(--border-color);">
+                <h3 style="color: var(--accent-blue); margin-bottom: 16px;"><i class="fa-brands fa-ethereum"></i> Music NFT Market</h3>
+                <p style="font-size: 16px; margin: 0;">$1.2B (2024) to <strong style="color: var(--primary-orange);">$8.4B (2034)</strong> at 21.8% CAGR</p>
+            </div>
+            <div style="background: var(--bg-card); border-radius: 16px; padding: 24px; border: 1px solid var(--border-color);">
+                <h3 style="color: var(--accent-blue); margin-bottom: 16px;"><i class="fa-solid fa-users"></i> Base + Farcaster</h3>
+                <p style="font-size: 16px; margin: 0;"><strong style="color: var(--primary-orange);">22M+</strong> Base addresses, <strong style="color: var(--primary-orange);">546K+</strong> Farcaster users</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 4: TARGET AUDIENCE - CREATORS -->
+<div class="slide-container" id="slide-4">
+    <div class="decor-glow" style="width: 400px; height: 400px; top: -100px; left: -100px;"></div>
+    <h2 class="slide-title">Target <span>Audience</span></h2>
+    <p style="color: var(--accent-blue); font-weight: 700; font-size: 14px; letter-spacing: 2px; margin-bottom: 30px;">UNITING 4 ECOSYSTEMS ON ONE PLATFORM</p>
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; position: relative; z-index: 1;">
+        <!-- Spotify Users -->
+        <div style="background: linear-gradient(180deg, #1DB954 0%, rgba(29, 185, 84, 0.2) 100%); border-radius: 20px; padding: 28px; border: 1px solid rgba(29, 185, 84, 0.3); text-align: center;">
+            <div style="width: 70px; height: 70px; border-radius: 50%; background: #1DB954; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center;">
+                <i class="fa-brands fa-spotify" style="font-size: 36px; color: white;"></i>
+            </div>
+            <h3 style="font-size: 20px; margin-bottom: 8px;">Spotify Users</h3>
+            <p style="font-size: 32px; font-weight: 800; color: #1DB954; margin-bottom: 8px;">600M+</p>
+            <p style="font-size: 13px; color: var(--text-muted); margin: 0;">Listeners become investors, not just consumers</p>
+        </div>
+        <!-- Suno Users -->
+        <div style="background: linear-gradient(180deg, #8B5CF6 0%, rgba(139, 92, 246, 0.2) 100%); border-radius: 20px; padding: 28px; border: 1px solid rgba(139, 92, 246, 0.3); text-align: center;">
+            <div style="width: 70px; height: 70px; border-radius: 50%; background: #8B5CF6; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center;">
+                <svg viewBox="0 0 24 24" style="width: 36px; height: 36px;" fill="white"><path d="M12 3v18M8 7v10M4 9v6M16 7v10M20 9v6"/><style>path{stroke:white;stroke-width:2;stroke-linecap:round;fill:none}</style></svg>
+            </div>
+            <h3 style="font-size: 20px; margin-bottom: 8px;">Suno/Udio Users</h3>
+            <p style="font-size: 32px; font-weight: 800; color: #8B5CF6; margin-bottom: 8px;">50M+</p>
+            <p style="font-size: 13px; color: var(--text-muted); margin: 0;">True ownership & monetization for AI music creators</p>
+        </div>
+        <!-- Farcaster Users -->
+        <div style="background: linear-gradient(180deg, #7C3AED 0%, rgba(124, 58, 237, 0.2) 100%); border-radius: 20px; padding: 28px; border: 1px solid rgba(124, 58, 237, 0.3); text-align: center;">
+            <div style="width: 70px; height: 70px; border-radius: 50%; background: #7C3AED; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center;">
+                <iconify-icon icon="simple-icons:farcaster" style="font-size: 36px; color: white;"></iconify-icon>
+            </div>
+            <h3 style="font-size: 20px; margin-bottom: 8px;">Farcaster Users</h3>
+            <p style="font-size: 32px; font-weight: 800; color: #7C3AED; margin-bottom: 8px;">546K+</p>
+            <p style="font-size: 13px; color: var(--text-muted); margin: 0;">Crypto-native social network, ready user base</p>
+        </div>
+        <!-- Investors -->
+        <div style="background: linear-gradient(180deg, var(--primary-orange) 0%, rgba(255, 107, 0, 0.2) 100%); border-radius: 20px; padding: 28px; border: 1px solid rgba(255, 107, 0, 0.3); text-align: center;">
+            <div style="width: 70px; height: 70px; border-radius: 50%; background: var(--primary-orange); margin: 0 auto 16px; display: flex; align-items: center; justify-content: center;">
+                <i class="fa-solid fa-chart-pie" style="font-size: 32px; color: white;"></i>
+            </div>
+            <h3 style="font-size: 20px; margin-bottom: 8px;">Web3 Investors</h3>
+            <p style="font-size: 32px; font-weight: 800; color: var(--primary-orange); margin-bottom: 8px;">$5B+</p>
+            <p style="font-size: 13px; color: var(--text-muted); margin: 0;">Music royalty investment market is booming</p>
+        </div>
+    </div>
+    <div style="margin-top: 30px; background: var(--bg-card); border-radius: 16px; padding: 24px; border: 1px solid var(--border-color); text-align: center;">
+        <p style="margin: 0; font-size: 18px; color: var(--text-primary);"><i class="fa-solid fa-arrows-to-circle" style="color: var(--primary-orange); margin-right: 12px;"></i>AceSteps is the <strong style="color: var(--primary-orange);">first and only solution</strong> uniting all 4 ecosystems on one platform</p>
+    </div>
+</div>
+
+<!-- SLIDE 5: TARGET AUDIENCE - DETAIL -->
+<div class="slide-container" id="slide-5">
+    <div class="decor-blob" style="width: 500px; height: 500px; background: var(--accent-purple); top: -200px; right: -150px;"></div>
+    <h2 class="slide-title">Why <span>AceSteps?</span></h2>
+    <div class="grid-2" style="gap: 40px;">
+        <div>
+            <div style="background: var(--bg-card); border-radius: 20px; padding: 28px; border: 1px solid var(--border-color); margin-bottom: 20px;">
+                <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                    <div style="width: 50px; height: 50px; border-radius: 12px; background: #1DB954; display: flex; align-items: center; justify-content: center;">
+                        <i class="fa-brands fa-spotify" style="font-size: 24px; color: white;"></i>
+                    </div>
+                    <h3 style="font-size: 20px;">For Spotify Users</h3>
+                </div>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 15px; color: var(--text-muted);"><i class="fa-solid fa-arrow-right" style="color: #1DB954;"></i> Invest in songs you love</li>
+                    <li style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 15px; color: var(--text-muted);"><i class="fa-solid fa-arrow-right" style="color: #1DB954;"></i> Be an active stakeholder, not passive listener</li>
+                    <li style="display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--text-muted);"><i class="fa-solid fa-arrow-right" style="color: #1DB954;"></i> Earn as songs gain popularity</li>
                 </ul>
             </div>
-            <div class="card">
-                <h3>For Fans</h3>
-                <ul class="feature-list problem-list">
-                    <li>No way to invest in artists</li>
-                    <li>No ownership stake in music</li>
-                    <li>Can't share in success</li>
-                    <li>Artists paid fractions of cents</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>For Web3 Projects</h3>
-                <ul class="feature-list problem-list">
-                    <li>Copyright is the #1 problem</li>
-                    <li>Legal liability everywhere</li>
-                    <li>Takedown requests</li>
-                    <li>Licensing nightmares</li>
+            <div style="background: var(--bg-card); border-radius: 20px; padding: 28px; border: 1px solid var(--border-color);">
+                <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                    <div style="width: 50px; height: 50px; border-radius: 12px; background: #8B5CF6; display: flex; align-items: center; justify-content: center;">
+                        <svg viewBox="0 0 24 24" style="width: 24px; height: 24px;" fill="white"><path d="M12 3v18M8 7v10M4 9v6M16 7v10M20 9v6"/><style>path{stroke:white;stroke-width:2;stroke-linecap:round;fill:none}</style></svg>
+                    </div>
+                    <h3 style="font-size: 20px;">For Suno/Udio Users</h3>
+                </div>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 15px; color: var(--text-muted);"><i class="fa-solid fa-arrow-right" style="color: #8B5CF6;"></i> 100% ownership of your music (NFT)</li>
+                    <li style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 15px; color: var(--text-muted);"><i class="fa-solid fa-arrow-right" style="color: #8B5CF6;"></i> Monetize through tokenization</li>
+                    <li style="display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--text-muted);"><i class="fa-solid fa-arrow-right" style="color: #8B5CF6;"></i> Commercial use without copyright issues</li>
                 </ul>
             </div>
         </div>
-        <div class="slide-number">2 / 14</div>
-    </section>
-
-    <!-- SLIDE 3: Market Stats -->
-    <section class="slide" id="slide-3">
-        <h2>Market Reality</h2>
-        <p style="text-align: center; margin-bottom: 50px;">The numbers tell the story.</p>
-        <div class="card-grid" style="max-width: 900px;">
-            <div class="card stat">
-                <div class="stat-value">$30B+</div>
-                <div class="stat-label">Global Music Streaming Market</div>
+        <div>
+            <div style="background: var(--bg-card); border-radius: 20px; padding: 28px; border: 1px solid var(--border-color); margin-bottom: 20px;">
+                <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                    <div style="width: 50px; height: 50px; border-radius: 12px; background: #7C3AED; display: flex; align-items: center; justify-content: center;">
+                        <iconify-icon icon="simple-icons:farcaster" style="font-size: 24px; color: white;"></iconify-icon>
+                    </div>
+                    <h3 style="font-size: 20px;">For Farcaster Users</h3>
+                </div>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 15px; color: var(--text-muted);"><i class="fa-solid fa-arrow-right" style="color: #7C3AED;"></i> Native mini-app experience</li>
+                    <li style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 15px; color: var(--text-muted);"><i class="fa-solid fa-arrow-right" style="color: #7C3AED;"></i> Share & trade music in social feed</li>
+                    <li style="display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--text-muted);"><i class="fa-solid fa-arrow-right" style="color: #7C3AED;"></i> Crypto-native wallet integration</li>
+                </ul>
             </div>
-            <div class="card stat">
-                <div class="stat-value">$0.003</div>
-                <div class="stat-label">Spotify pays per stream</div>
-            </div>
-            <div class="card stat">
-                <div class="stat-value">90%</div>
-                <div class="stat-label">Artists never see a return</div>
-            </div>
-            <div class="card stat">
-                <div class="stat-value">$100B+</div>
-                <div class="stat-label">Creator Economy Size</div>
-            </div>
-        </div>
-        <div class="slide-number">3 / 14</div>
-    </section>
-
-    <!-- SLIDE 4: Solution -->
-    <section class="slide" id="slide-4">
-        <h2>Our Solution</h2>
-        <p style="text-align: center; margin-bottom: 40px;">Three pillars that change everything.</p>
-        <div class="card-grid card-grid-3">
-            <div class="card">
-                <h3>🎵 AI Music Creation</h3>
-                <p style="font-size: 1rem;">
-                    Anyone can create professional music using text prompts. No training, no instruments, no studio required.
-                </p>
-                <p style="font-size: 0.9rem; margin-top: 16px; color: var(--primary);">
-                    ~4.5 seconds for 30 seconds of music
-                </p>
-            </div>
-            <div class="card">
-                <h3>🎫 NFT Ownership</h3>
-                <p style="font-size: 1rem;">
-                    Every AI-generated song is minted as an ERC-721 NFT. Creator owns 100% of the copyright, verified on-chain.
-                </p>
-                <p style="font-size: 0.9rem; margin-top: 16px; color: var(--primary);">
-                    Immutable metadata on IPFS
-                </p>
-            </div>
-            <div class="card">
-                <h3>📈 Fractional Investment</h3>
-                <p style="font-size: 1rem;">
-                    Songs tokenized into 100,000 ERC-20 tokens. Fans buy shares, revenue is distributed to all holders.
-                </p>
-                <p style="font-size: 0.9rem; margin-top: 16px; color: var(--primary);">
-                    Liquid market via Uniswap V4
-                </p>
+            <div style="background: var(--bg-card); border-radius: 20px; padding: 28px; border: 1px solid var(--border-color);">
+                <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                    <div style="width: 50px; height: 50px; border-radius: 12px; background: var(--primary-orange); display: flex; align-items: center; justify-content: center;">
+                        <i class="fa-solid fa-chart-pie" style="font-size: 24px; color: white;"></i>
+                    </div>
+                    <h3 style="font-size: 20px;">For Investors</h3>
+                </div>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 15px; color: var(--text-muted);"><i class="fa-solid fa-arrow-right" style="color: var(--primary-orange);"></i> Music investment starting from $1</li>
+                    <li style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 15px; color: var(--text-muted);"><i class="fa-solid fa-arrow-right" style="color: var(--primary-orange);"></i> Liquid market via Uniswap V4</li>
+                    <li style="display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--text-muted);"><i class="fa-solid fa-arrow-right" style="color: var(--primary-orange);"></i> Automated revenue distribution (donate hook)</li>
+                </ul>
             </div>
         </div>
-        <div class="slide-number">4 / 14</div>
-    </section>
+    </div>
+</div>
 
-    <!-- SLIDE 5: Copyright Solution -->
-    <section class="slide" id="slide-5">
-        <h2>The Copyright Solution</h2>
-        <p style="text-align: center; margin-bottom: 30px;">
-            <span class="highlight">We solved the problem that has plagued every Web3 music project.</span>
-        </p>
-        <div class="card" style="max-width: 900px; margin-bottom: 30px;">
-            <ul class="feature-list">
-                <li><strong>Open-Source AI Model:</strong> ACE-Step, Apache 2.0 licensed - full commercial use</li>
-                <li><strong>No Pre-existing Rights:</strong> Every song is newly created by AI - no sampling</li>
-                <li><strong>Creator-Owned IP:</strong> The generator owns 100% copyright, verified via NFT</li>
-                <li><strong>Signature-Based Minting:</strong> Only platform-generated AI music can be minted</li>
-                <li><strong>Clean Legal Framework:</strong> No licensing fees, no takedowns, no gray areas</li>
+<!-- SLIDE 6: SOLUTION - PILLAR 1: GENERATION -->
+<div class="slide-container" id="slide-6">
+    <h2 class="slide-title">01. Create <span>Instantly</span></h2>
+    <div class="grid-2">
+        <div>
+            <p style="color: var(--accent-blue); font-weight: 700; font-size: 14px; letter-spacing: 2px; margin-bottom: 20px;">AI GENERATION ENGINE</p>
+            <p style="font-size: 22px; color: var(--text-primary);">Our Text-to-Music interface allows <strong>anyone</strong> to become a producer in seconds.</p>
+            <div class="feature-box">
+                <h3><i class="fa-solid fa-microchip"></i> ACE-Step Model</h3>
+                <p>3.5B parameters tuned for high-fidelity audio generation. Open-source (Apache 2.0).</p>
+            </div>
+            <div class="feature-box">
+                <h3><i class="fa-solid fa-signature"></i> Verification Signature</h3>
+                <p>Only AI-generated content receives a cryptographic signature for minting.</p>
+            </div>
+            <div class="feature-box">
+                <h3><i class="fa-solid fa-bolt"></i> Fast Generation</h3>
+                <p>~4.5 seconds for 30 seconds of professional-quality music.</p>
+            </div>
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center;">
+            <div style="background: var(--bg-card); border-radius: 30px; padding: 20px; border: 1px solid var(--border-color);">
+                <img src="uploaded:Screenshot 2025-12-27 at 06.13.36.jpg" class="app-screenshot" alt="AceSteps Creation UI" style="max-height: 480px;" onerror="this.parentElement.innerHTML='<div style=\'width: 300px; height: 480px; background: linear-gradient(180deg, #1A1A2E 0%, #16213E 100%); border-radius: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center;\'><i class=\'fa-solid fa-wand-magic-sparkles\' style=\'font-size: 60px; color: var(--primary-orange); margin-bottom: 20px;\'></i><p style=\'color: var(--text-muted); text-align: center;\'>Create Music<br>with Text Prompts</p></div>'">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 7: SOLUTION - PILLAR 2: OWNERSHIP -->
+<div class="slide-container" id="slide-7">
+    <h2 class="slide-title">02. Own Your <span>IP</span></h2>
+    <div class="grid-2">
+        <div style="display: flex; justify-content: center; align-items: center;">
+            <div style="background: var(--bg-card); border-radius: 30px; padding: 20px; border: 1px solid var(--border-color);">
+                <img src="uploaded:Screenshot 2025-12-27 at 06.13.56.png" class="app-screenshot" alt="AceSteps Library UI" style="max-height: 480px;" onerror="this.parentElement.innerHTML='<div style=\'width: 300px; height: 480px; background: linear-gradient(180deg, #1A1A2E 0%, #16213E 100%); border-radius: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center;\'><i class=\'fa-solid fa-record-vinyl\' style=\'font-size: 60px; color: var(--accent-blue); margin-bottom: 20px;\'></i><p style=\'color: var(--text-muted); text-align: center;\'>Your Music<br>Library</p></div>'">
+            </div>
+        </div>
+        <div>
+            <p style="color: var(--accent-blue); font-weight: 700; font-size: 14px; letter-spacing: 2px; margin-bottom: 20px;">IP-NFT TECHNOLOGY</p>
+            <p style="font-size: 22px; color: var(--text-primary);">Every song you create is minted as a unique <strong>ERC-721 NFT</strong> on Base Network.</p>
+            <ul class="check-list" style="margin-top: 30px;">
+                <li><i class="fa-solid fa-check-circle"></i> <span>Fully decentralized IPFS storage</span></li>
+                <li><i class="fa-solid fa-check-circle"></i> <span>Verified platform authenticity</span></li>
+                <li><i class="fa-solid fa-check-circle"></i> <span>Permanent metadata immutability</span></li>
+                <li><i class="fa-solid fa-check-circle"></i> <span>100% creator-owned copyright</span></li>
             </ul>
         </div>
-        <div class="quote">
-            While other Web3 music platforms are fighting legal battles, we're building the future on 100% original, AI-generated content.
-        </div>
-        <div class="slide-number">5 / 14</div>
-    </section>
+    </div>
+</div>
 
-    <!-- SLIDE 6: True Decentralization -->
-    <section class="slide" id="slide-6">
-        <h2>TRUE Decentralization</h2>
-        <p style="text-align: center; margin-bottom: 40px;">
-            Because we have zero copyright risk, we achieve what no other platform can claim.
-        </p>
-        <div class="comparison">
-            <div class="comparison-side comparison-bad">
-                <h3 style="color: var(--red);">❌ Other "Decentralized" Platforms</h3>
-                <ul class="feature-list problem-list">
-                    <li>Manual content moderation teams</li>
-                    <li>Automated copyright detection</li>
-                    <li>DMCA takedown processes</li>
-                    <li>Legal teams for content</li>
-                    <li>Centralized decision-making</li>
-                </ul>
+<!-- SLIDE 8: SOLUTION - PILLAR 3: TOKENIZATION -->
+<div class="slide-container" id="slide-8">
+    <h2 class="slide-title">03. Fractional <span>Economy</span></h2>
+    <div class="grid-2">
+        <div>
+            <p style="color: var(--accent-blue); font-weight: 700; font-size: 14px; letter-spacing: 2px; margin-bottom: 20px;">SONG TOKENIZATION (STK)</p>
+            <p style="font-size: 22px; color: var(--text-primary);">Enable trading to split your song into <strong>100,000 liquid tokens</strong>.</p>
+            <div class="feature-box">
+                <h3><i class="fa-solid fa-water"></i> Automatic LP Creation</h3>
+                <p>AceSteps handles liquidity provisioning automatically when trading starts.</p>
             </div>
-            <div class="comparison-side comparison-good">
-                <h3 style="color: var(--green);">✓ AceSteps</h3>
-                <ul class="feature-list">
-                    <li>No external uploads allowed</li>
-                    <li>No copyright moderation needed</li>
-                    <li>No human reviewers</li>
-                    <li>No takedown infrastructure</li>
-                    <li>Fully trustless by design</li>
-                </ul>
+            <div class="feature-box">
+                <h3><i class="fa-solid fa-arrow-trend-up"></i> Organic Growth</h3>
+                <p>Token price is driven by popularity and automated ad-revenue injection.</p>
+            </div>
+            <div style="display: flex; gap: 16px; margin-top: 24px;">
+                <div class="stat-card" style="flex: 1;">
+                    <div class="value">80%</div>
+                    <div class="label">To Creator</div>
+                </div>
+                <div class="stat-card" style="flex: 1;">
+                    <div class="value">20%</div>
+                    <div class="label">To LP Pool</div>
+                </div>
             </div>
         </div>
-        <div class="slide-number">6 / 14</div>
-    </section>
+        <div style="display: flex; gap: 16px; justify-content: center;">
+            <div style="background: var(--bg-card); border-radius: 24px; padding: 16px; border: 1px solid var(--border-color);">
+                <img src="uploaded:Screenshot 2025-12-27 at 06.14.47.png" class="app-screenshot" style="max-height: 420px;" alt="AceSteps Trading" onerror="this.parentElement.innerHTML='<div style=\'width: 160px; height: 420px; background: linear-gradient(180deg, #1A1A2E 0%, #16213E 100%); border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center;\'><i class=\'fa-solid fa-chart-line\' style=\'font-size: 40px; color: var(--success);\'></i></div>'">
+            </div>
+            <div style="background: var(--bg-card); border-radius: 24px; padding: 16px; border: 1px solid var(--border-color);">
+                <img src="uploaded:Screenshot 2025-12-27 at 06.14.56.png" class="app-screenshot" style="max-height: 420px;" alt="AceSteps Wallet" onerror="this.parentElement.innerHTML='<div style=\'width: 160px; height: 420px; background: linear-gradient(180deg, #1A1A2E 0%, #16213E 100%); border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center;\'><i class=\'fa-solid fa-wallet\' style=\'font-size: 40px; color: var(--accent-blue);\'></i></div>'">
+            </div>
+        </div>
+    </div>
+</div>
 
-    <!-- SLIDE 7: How It Works - Creators -->
-    <section class="slide" id="slide-7">
-        <h2>How It Works</h2>
-        <p style="text-align: center; margin-bottom: 20px;">For Creators - 5 Simple Steps</p>
-        <div class="flow">
-            <div class="flow-step">
-                <div class="flow-step-number">1</div>
-                <div class="flow-step-title">CREATE</div>
-                <div class="flow-step-desc">Enter a text prompt</div>
+<!-- SLIDE 9: THE COPYRIGHT GUARANTEE -->
+<div class="slide-container" id="slide-9">
+    <div class="decor-glow" style="width: 600px; height: 600px; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+    <h2 class="slide-title">Zero Copyright <span>Risk</span></h2>
+    <div class="grid-2">
+        <div>
+            <p style="color: var(--primary-orange); font-weight: 700; font-size: 14px; letter-spacing: 2px; margin-bottom: 20px;">THE ACESTEPS MOAT</p>
+            <p style="font-size: 22px; color: var(--text-primary);">We solve the #1 hurdle for Web3 music: <strong>Copyright liability.</strong></p>
+            <p>By architecting the protocol to <strong>only</strong> accept music generated within the app, we eliminate external upload paths entirely.</p>
+            <div style="background: linear-gradient(135deg, rgba(255, 107, 0, 0.1) 0%, rgba(255, 107, 0, 0.05) 100%); padding: 24px; border-radius: 16px; border-left: 4px solid var(--primary-orange); margin-top: 30px;">
+                <p style="margin: 0; color: var(--text-primary); font-weight: 600; font-size: 20px;">No Upload = No Moderation = No Legal Risk</p>
             </div>
-            <div class="flow-arrow">→</div>
-            <div class="flow-step">
-                <div class="flow-step-number">2</div>
-                <div class="flow-step-title">PREVIEW</div>
-                <div class="flow-step-desc">AI generates in seconds</div>
-            </div>
-            <div class="flow-arrow">→</div>
-            <div class="flow-step">
-                <div class="flow-step-number">3</div>
-                <div class="flow-step-title">SAVE</div>
-                <div class="flow-step-desc">Mint as NFT</div>
-            </div>
-            <div class="flow-arrow">→</div>
-            <div class="flow-step">
-                <div class="flow-step-number">4</div>
-                <div class="flow-step-title">PUBLISH</div>
-                <div class="flow-step-desc">Go public & earn</div>
-            </div>
-            <div class="flow-arrow">→</div>
-            <div class="flow-step">
-                <div class="flow-step-number">5</div>
-                <div class="flow-step-title">TOKENIZE</div>
-                <div class="flow-step-desc">Enable fan investment</div>
-            </div>
+            <p style="margin-top: 24px; font-style: italic; color: var(--text-dim);">"They have lawyers. We have math."</p>
         </div>
-        <div class="card" style="max-width: 600px; text-align: center; margin-top: 30px;">
-            <p style="font-size: 1rem; margin: 0;">
-                <strong>Example prompt:</strong> "emotional piano ballad about lost love"<br>
-                <span style="color: var(--green);">→ Professional track in ~4.5 seconds</span>
-            </p>
+        <div style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <div style="position: relative;">
+                <i class="fa-solid fa-shield-halved" style="font-size: 180px; background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                    <i class="fa-solid fa-check" style="font-size: 60px; color: var(--success);"></i>
+                </div>
+            </div>
+            <h3 style="margin-top: 24px; font-size: 24px;">Mathematically Decentralized</h3>
+            <p style="color: var(--text-dim);">The only truly decentralized music platform</p>
         </div>
-        <div class="slide-number">7 / 14</div>
-    </section>
+    </div>
+</div>
 
-    <!-- SLIDE 8: Tokenomics -->
-    <section class="slide" id="slide-8">
-        <h2>Tokenomics</h2>
-        <p style="text-align: center; margin-bottom: 40px;">Per-song token distribution designed for alignment.</p>
-        <div class="card-grid" style="max-width: 600px;">
-            <div class="card stat">
-                <div class="stat-value">80%</div>
-                <div class="stat-label">To Creator (80,000 tokens)</div>
+<!-- SLIDE 10: SOCIAL DISCOVERY -->
+<div class="slide-container" id="slide-10">
+    <h2 class="slide-title">Native Social <span>Layer</span></h2>
+    <div class="grid-2">
+        <div style="display: flex; gap: 16px; justify-content: center;">
+            <div style="background: var(--bg-card); border-radius: 24px; padding: 16px; border: 1px solid var(--border-color);">
+                <img src="uploaded:Screenshot 2025-12-27 at 06.15.25.jpg" class="app-screenshot" style="max-height: 440px;" alt="AceSteps Feed" onerror="this.parentElement.innerHTML='<div style=\'width: 180px; height: 440px; background: linear-gradient(180deg, #1A1A2E 0%, #16213E 100%); border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center;\'><i class=\'fa-solid fa-rss\' style=\'font-size: 40px; color: var(--primary-orange);\'></i></div>'">
             </div>
-            <div class="card stat">
-                <div class="stat-value">20%</div>
-                <div class="stat-label">To Liquidity Pool (20,000 tokens)</div>
+            <div style="background: var(--bg-card); border-radius: 24px; padding: 16px; border: 1px solid var(--border-color);">
+                <img src="uploaded:Screenshot 2025-12-27 at 06.15.35.jpg" class="app-screenshot" style="max-height: 440px;" alt="AceSteps Profile" onerror="this.parentElement.innerHTML='<div style=\'width: 180px; height: 440px; background: linear-gradient(180deg, #1A1A2E 0%, #16213E 100%); border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center;\'><i class=\'fa-solid fa-user\' style=\'font-size: 40px; color: var(--accent-blue);\'></i></div>'">
             </div>
         </div>
-        <div class="card" style="max-width: 800px; margin-top: 40px;">
-            <h3>Why No Unlock Mechanism?</h3>
-            <p style="font-size: 1rem;">
-                Due to AMM mathematics (x × y = k), acquiring 100% of tokens requires <span class="highlight">infinite ETH</span>.
-                The NFT can never be "redeemed" - this creates permanent liquidity and continuous trading opportunity.
-            </p>
+        <div>
+            <p style="color: var(--accent-blue); font-weight: 700; font-size: 14px; letter-spacing: 2px; margin-bottom: 20px;">BUILT FOR FARCASTER</p>
+            <p style="font-size: 22px; color: var(--text-primary);">AceSteps is a native <strong>Farcaster Mini-App</strong>.</p>
+            <p>Users can share songs as "Casts", tipping and trading directly within their social feed.</p>
+            <div class="feature-box">
+                <h3><i class="fa-solid fa-share-nodes"></i> Viral Loops</h3>
+                <p>Every play shared on social is a marketing event that can drive token appreciation.</p>
+            </div>
+            <div class="feature-box">
+                <h3><i class="fa-solid fa-users"></i> Built-in Audience</h3>
+                <p>Access to 546K+ Farcaster users who are already crypto-native.</p>
+            </div>
         </div>
-        <div class="slide-number">8 / 14</div>
-    </section>
+    </div>
+</div>
 
-    <!-- SLIDE 9: Revenue Model -->
-    <section class="slide" id="slide-9">
-        <h2>Revenue Model</h2>
-        <p style="text-align: center; margin-bottom: 40px;">Multiple revenue streams, transparent distribution.</p>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Source</th>
-                        <th>Creator/Token Holders</th>
-                        <th>Platform</th>
-                    </tr>
-                </thead>
+<!-- SLIDE 11: BUSINESS MODEL -->
+<div class="slide-container" id="slide-11">
+    <h2 class="slide-title">Business <span>Model</span></h2>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; position: relative; z-index: 1;">
+        <div>
+            <h3 style="color: var(--accent-blue); margin-bottom: 24px;"><i class="fa-solid fa-coins"></i> Revenue Streams</h3>
+            <div class="feature-box">
+                <h3 style="color: var(--primary-orange);">20% Ad Revenue Share</h3>
+                <p>Every song play generates ad revenue. Platform takes 20%, 80% flows to token holders.</p>
+            </div>
+            <div class="feature-box">
+                <h3 style="color: var(--primary-orange);">1% LP Swap Fees</h3>
+                <p>Platform owns 100% of initial liquidity position. 1% fee on every buy/sell.</p>
+            </div>
+            <div class="feature-box">
+                <h3 style="color: var(--primary-orange);">Future: Premium Features</h3>
+                <p>Subscriptions, enhanced analytics, promotional tools, white-label licensing.</p>
+            </div>
+        </div>
+        <div>
+            <h3 style="color: var(--accent-blue); margin-bottom: 24px;"><i class="fa-solid fa-calculator"></i> Unit Economics</h3>
+            <table style="margin-top: 16px;">
                 <tbody>
                     <tr>
-                        <td>Ad Revenue (Non-tokenized)</td>
-                        <td><span class="highlight-green">80%</span> to Creator</td>
-                        <td>20%</td>
+                        <td><strong>Cost per song mint</strong></td>
+                        <td style="text-align: right; color: var(--success);">~$0.01</td>
                     </tr>
                     <tr>
-                        <td>Ad Revenue (Tokenized)</td>
-                        <td><span class="highlight-green">80%</span> → Pool (price ↑)</td>
-                        <td>20%</td>
+                        <td><strong>Avg revenue per 1K plays</strong></td>
+                        <td style="text-align: right; color: var(--primary-orange);">$1-3</td>
                     </tr>
                     <tr>
-                        <td>Swap Fees</td>
-                        <td>LP Holders benefit</td>
-                        <td>1% per swap</td>
+                        <td><strong>Platform take per 1K plays</strong></td>
+                        <td style="text-align: right; color: var(--primary-orange);">$0.20-0.60</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LP fee per $100 volume</strong></td>
+                        <td style="text-align: right; color: var(--primary-orange);">$1.00</td>
                     </tr>
                 </tbody>
             </table>
-        </div>
-        <div class="card" style="max-width: 700px; margin-top: 30px; text-align: center;">
-            <p style="font-size: 1rem; margin: 0;">
-                <strong>Innovation:</strong> Revenue flows directly to Uniswap pool via <span class="highlight">donate()</span> hook → Token price automatically appreciates
-            </p>
-        </div>
-        <div class="slide-number">9 / 14</div>
-    </section>
-
-    <!-- SLIDE 10: Tech Stack -->
-    <section class="slide" id="slide-10">
-        <h2>Technology Stack</h2>
-        <p style="text-align: center; margin-bottom: 40px;">Built on proven, cutting-edge infrastructure.</p>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Layer</th>
-                        <th>Technology</th>
-                        <th>Purpose</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Blockchain</td>
-                        <td><span class="highlight">Base (Ethereum L2)</span></td>
-                        <td>Low fees (~$0.01), fast transactions</td>
-                    </tr>
-                    <tr>
-                        <td>DEX</td>
-                        <td><span class="highlight">Uniswap V4</span></td>
-                        <td>Trading, liquidity, revenue hooks</td>
-                    </tr>
-                    <tr>
-                        <td>AI Model</td>
-                        <td><span class="highlight">ACE-Step 3.5B</span></td>
-                        <td>Music generation (Apache 2.0)</td>
-                    </tr>
-                    <tr>
-                        <td>Platform</td>
-                        <td><span class="highlight">Farcaster Mini App</span></td>
-                        <td>Social + Mobile native</td>
-                    </tr>
-                    <tr>
-                        <td>Standards</td>
-                        <td><span class="highlight">ERC-721 / ERC-20</span></td>
-                        <td>NFT ownership / Fractional shares</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="slide-number">10 / 14</div>
-    </section>
-
-    <!-- SLIDE 11: Competition -->
-    <section class="slide" id="slide-11">
-        <h2>Competitive Landscape</h2>
-        <p style="text-align: center; margin-bottom: 30px;">We have features no one else can offer.</p>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Feature</th>
-                        <th>AceSteps</th>
-                        <th>Audius</th>
-                        <th>Royal</th>
-                        <th>Sound.xyz</th>
-                        <th>Spotify</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>AI Music Creation</td>
-                        <td><span class="check">✓</span></td>
-                        <td><span class="cross">✗</span></td>
-                        <td><span class="cross">✗</span></td>
-                        <td><span class="cross">✗</span></td>
-                        <td><span class="cross">✗</span></td>
-                    </tr>
-                    <tr>
-                        <td>Copyright-Free</td>
-                        <td><span class="check">✓</span></td>
-                        <td><span class="cross">✗</span></td>
-                        <td><span class="cross">✗</span></td>
-                        <td><span class="cross">✗</span></td>
-                        <td><span class="cross">✗</span></td>
-                    </tr>
-                    <tr>
-                        <td>Truly Decentralized</td>
-                        <td><span class="check">✓</span></td>
-                        <td><span class="cross">✗</span></td>
-                        <td><span class="cross">✗</span></td>
-                        <td><span class="cross">✗</span></td>
-                        <td><span class="cross">✗</span></td>
-                    </tr>
-                    <tr>
-                        <td>Fractional Ownership</td>
-                        <td><span class="check">✓</span></td>
-                        <td><span class="cross">✗</span></td>
-                        <td><span class="check">✓</span></td>
-                        <td><span class="cross">✗</span></td>
-                        <td><span class="cross">✗</span></td>
-                    </tr>
-                    <tr>
-                        <td>On-chain Revenue</td>
-                        <td><span class="check">✓</span></td>
-                        <td>Partial</td>
-                        <td><span class="cross">✗</span></td>
-                        <td><span class="check">✓</span></td>
-                        <td><span class="cross">✗</span></td>
-                    </tr>
-                    <tr>
-                        <td>Legal Risk</td>
-                        <td><span class="highlight-green">None</span></td>
-                        <td><span class="highlight-orange">High</span></td>
-                        <td><span class="highlight-orange">High</span></td>
-                        <td><span class="highlight-orange">Medium</span></td>
-                        <td>N/A</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="slide-number">11 / 14</div>
-    </section>
-
-    <!-- SLIDE 12: Market Opportunity -->
-    <section class="slide" id="slide-12">
-        <h2>Market Opportunity</h2>
-        <p style="text-align: center; margin-bottom: 40px;">Massive addressable market at the intersection of three trends.</p>
-        <div class="card-grid card-grid-3">
-            <div class="card stat">
-                <div class="stat-value">$200B+</div>
-                <div class="stat-label">TAM</div>
-                <p style="font-size: 0.85rem; margin-top: 10px;">Music + Creator Economy + NFTs</p>
-            </div>
-            <div class="card stat">
-                <div class="stat-value">$50B</div>
-                <div class="stat-label">SAM</div>
-                <p style="font-size: 0.85rem; margin-top: 10px;">Digital streaming + Music NFTs + AI content</p>
-            </div>
-            <div class="card stat">
-                <div class="stat-value">$1B</div>
-                <div class="stat-label">SOM</div>
-                <p style="font-size: 0.85rem; margin-top: 10px;">Web3-native users + Farcaster/Base ecosystem</p>
+            <div style="background: var(--bg-card); border-radius: 12px; padding: 20px; margin-top: 24px; border: 1px solid var(--border-color);">
+                <p style="margin: 0; font-size: 14px; color: var(--text-muted);"><i class="fa-solid fa-lightbulb" style="color: var(--primary-orange);"></i> Revenue scales with platform usage - more songs, more plays, more trades = more revenue</p>
             </div>
         </div>
-        <div class="pills" style="margin-top: 40px;">
-            <span class="badge badge-green">AI Music Exploding</span>
-            <span class="badge badge-green">Base Momentum</span>
-            <span class="badge badge-green">Farcaster Growing</span>
-            <span class="badge badge-green">Creator Economy +20% YoY</span>
+    </div>
+</div>
+
+<!-- SLIDE 12: COMPETITIVE MATRIX -->
+<div class="slide-container" id="slide-12">
+    <h2 class="slide-title">Market <span>Dominance</span></h2>
+    <div style="margin-top: 20px; position: relative; z-index: 1;">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 30%;">Capability</th>
+                    <th style="text-align: center;">AceSteps</th>
+                    <th style="text-align: center;">Audius / Royal</th>
+                    <th style="text-align: center;">Spotify</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>AI Music Creation</strong></td>
+                    <td style="text-align: center;"><i class="fa-solid fa-check" style="color: var(--success); font-size: 20px;"></i></td>
+                    <td style="text-align: center;"><i class="fa-solid fa-xmark" style="color: var(--danger); font-size: 20px;"></i></td>
+                    <td style="text-align: center;"><i class="fa-solid fa-xmark" style="color: var(--danger); font-size: 20px;"></i></td>
+                </tr>
+                <tr>
+                    <td><strong>Zero Copyright Risk</strong></td>
+                    <td style="text-align: center;"><i class="fa-solid fa-check" style="color: var(--success); font-size: 20px;"></i></td>
+                    <td style="text-align: center;"><i class="fa-solid fa-xmark" style="color: var(--danger); font-size: 20px;"></i></td>
+                    <td style="text-align: center;"><i class="fa-solid fa-xmark" style="color: var(--danger); font-size: 20px;"></i></td>
+                </tr>
+                <tr>
+                    <td><strong>Truly Decentralized</strong></td>
+                    <td style="text-align: center;"><i class="fa-solid fa-check" style="color: var(--success); font-size: 20px;"></i></td>
+                    <td style="text-align: center;"><i class="fa-solid fa-xmark" style="color: var(--danger); font-size: 20px;"></i></td>
+                    <td style="text-align: center;"><i class="fa-solid fa-xmark" style="color: var(--danger); font-size: 20px;"></i></td>
+                </tr>
+                <tr>
+                    <td><strong>Fractional Shares</strong></td>
+                    <td style="text-align: center;"><i class="fa-solid fa-check" style="color: var(--success); font-size: 20px;"></i></td>
+                    <td style="text-align: center;"><span style="color: var(--text-dim);">Partial</span></td>
+                    <td style="text-align: center;"><i class="fa-solid fa-xmark" style="color: var(--danger); font-size: 20px;"></i></td>
+                </tr>
+                <tr>
+                    <td><strong>Automated LP Hooks</strong></td>
+                    <td style="text-align: center;"><i class="fa-solid fa-check" style="color: var(--success); font-size: 20px;"></i></td>
+                    <td style="text-align: center;"><i class="fa-solid fa-xmark" style="color: var(--danger); font-size: 20px;"></i></td>
+                    <td style="text-align: center;"><i class="fa-solid fa-xmark" style="color: var(--danger); font-size: 20px;"></i></td>
+                </tr>
+                <tr>
+                    <td><strong>No Content Moderation</strong></td>
+                    <td style="text-align: center;"><i class="fa-solid fa-check" style="color: var(--success); font-size: 20px;"></i></td>
+                    <td style="text-align: center;"><i class="fa-solid fa-xmark" style="color: var(--danger); font-size: 20px;"></i></td>
+                    <td style="text-align: center;"><i class="fa-solid fa-xmark" style="color: var(--danger); font-size: 20px;"></i></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- SLIDE 13: ROADMAP -->
+<div class="slide-container" id="slide-13">
+    <h2 class="slide-title">Execution <span>Roadmap</span></h2>
+    <div class="roadmap-container">
+        <div class="roadmap-item">
+            <div class="roadmap-dot"></div>
+            <h3 style="color: var(--primary-orange);">Q1 2025</h3>
+            <p style="font-size: 14px;">Beta Launch on Base Sepolia. AI Generation engine live. Initial community onboarding.</p>
         </div>
-        <div class="slide-number">12 / 14</div>
-    </section>
+        <div class="roadmap-item">
+            <div class="roadmap-dot future"></div>
+            <h3 style="color: var(--accent-blue);">Q2 2025</h3>
+            <p style="font-size: 14px;">Mainnet Launch. Uniswap V4 Revenue Hooks integration. Song tokenization enabled.</p>
+        </div>
+        <div class="roadmap-item">
+            <div class="roadmap-dot future"></div>
+            <h3 style="color: var(--accent-blue);">Q3 2025</h3>
+            <p style="font-size: 14px;">Social Playlist curation. Farcaster Frame 2.0 integration. Creator analytics.</p>
+        </div>
+        <div class="roadmap-item">
+            <div class="roadmap-dot future"></div>
+            <h3 style="color: var(--accent-blue);">2026</h3>
+            <p style="font-size: 14px;">Enterprise API. Licensing for games and AI agents seeking rights-cleared audio.</p>
+        </div>
+    </div>
+    <div style="margin-top: 60px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+        <div class="stat-card">
+            <div class="value" style="font-size: 28px;"><i class="fa-solid fa-check-circle" style="color: var(--success);"></i></div>
+            <div class="label">Smart Contracts</div>
+        </div>
+        <div class="stat-card">
+            <div class="value" style="font-size: 28px;"><i class="fa-solid fa-check-circle" style="color: var(--success);"></i></div>
+            <div class="label">AI Integration</div>
+        </div>
+        <div class="stat-card">
+            <div class="value" style="font-size: 28px;"><i class="fa-solid fa-check-circle" style="color: var(--success);"></i></div>
+            <div class="label">Frontend MVP</div>
+        </div>
+        <div class="stat-card">
+            <div class="value" style="font-size: 28px;"><i class="fa-solid fa-spinner fa-spin" style="color: var(--primary-orange);"></i></div>
+            <div class="label">Testnet Launch</div>
+        </div>
+    </div>
+</div>
 
-    <!-- SLIDE 13: Roadmap -->
-    <section class="slide" id="slide-13">
-        <h2>Roadmap & Traction</h2>
-        <p style="text-align: center; margin-bottom: 40px;">Built and ready to scale.</p>
-        <div class="card-grid" style="max-width: 1000px;">
-            <div class="card">
-                <h3 style="color: var(--green);">Phase 1: Core ✓</h3>
-                <ul class="feature-list">
-                    <li>AI Music Generation</li>
-                    <li>SongNFT.sol deployed</li>
-                    <li>IPFS metadata</li>
-                    <li>Core UI complete</li>
-                </ul>
+<!-- SLIDE 14: TEAM -->
+<div class="slide-container" id="slide-14">
+    <h2 class="slide-title">The <span>Team</span></h2>
+    <div class="team-grid" style="margin-top: 40px;">
+        <div class="team-card">
+            <div class="avatar"><i class="fa-solid fa-user"></i></div>
+            <h3>[Founder Name]</h3>
+            <div class="role">CEO & Product</div>
+            <p>Background in music tech and blockchain. Passionate about democratizing music creation.</p>
+        </div>
+        <div class="team-card">
+            <div class="avatar" style="background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);"><i class="fa-solid fa-code"></i></div>
+            <h3>[Tech Lead Name]</h3>
+            <div class="role">CTO</div>
+            <p>Full-stack engineer with deep expertise in smart contracts and AI/ML systems.</p>
+        </div>
+        <div class="team-card">
+            <div class="avatar" style="background: linear-gradient(135deg, var(--accent-purple) 0%, #E040FB 100%);"><i class="fa-solid fa-palette"></i></div>
+            <h3>[Design Lead Name]</h3>
+            <div class="role">Head of Design</div>
+            <p>UX/UI specialist with experience building consumer-facing Web3 products.</p>
+        </div>
+    </div>
+    <div style="margin-top: 40px;">
+        <h3 style="color: var(--text-muted); margin-bottom: 20px;">Advisors</h3>
+        <div style="display: flex; gap: 30px; justify-content: center;">
+            <div style="text-align: center;">
+                <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--bg-card); border: 2px solid var(--border-color); margin: 0 auto 10px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-music" style="color: var(--primary-orange);"></i>
+                </div>
+                <p style="font-size: 14px; margin: 0;">Music Industry Expert</p>
             </div>
-            <div class="card">
-                <h3 style="color: var(--orange);">Phase 2: Tokenization</h3>
-                <ul class="feature-list" style="opacity: 0.8;">
-                    <li>SongVault.sol</li>
-                    <li>SongToken factory</li>
-                    <li>Uniswap V4 pools</li>
-                    <li>Trading UI</li>
-                </ul>
+            <div style="text-align: center;">
+                <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--bg-card); border: 2px solid var(--border-color); margin: 0 auto 10px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-brands fa-ethereum" style="color: var(--accent-blue);"></i>
+                </div>
+                <p style="font-size: 14px; margin: 0;">DeFi / Uniswap Specialist</p>
             </div>
-            <div class="card">
-                <h3 style="color: var(--text-muted);">Phase 3: Revenue</h3>
-                <ul class="feature-list" style="opacity: 0.6;">
-                    <li>SongRevenueHook.sol</li>
-                    <li>Ad integration</li>
-                    <li>Auto donate()</li>
-                    <li>Analytics</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3 style="color: var(--text-muted);">Phase 4: Launch</h3>
-                <ul class="feature-list" style="opacity: 0.6;">
-                    <li>Security audit</li>
-                    <li>Mainnet deploy</li>
-                    <li>Community</li>
-                    <li>Marketing push</li>
-                </ul>
+            <div style="text-align: center;">
+                <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--bg-card); border: 2px solid var(--border-color); margin: 0 auto 10px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-rocket" style="color: var(--accent-purple);"></i>
+                </div>
+                <p style="font-size: 14px; margin: 0;">Web3 Growth Expert</p>
             </div>
         </div>
-        <div class="slide-number">13 / 14</div>
-    </section>
+    </div>
+</div>
 
-    <!-- SLIDE 14: Thank You -->
-    <section class="slide" id="slide-14">
-        <h1 class="gradient">Thank You</h1>
-        <div class="quote" style="margin-bottom: 40px;">
-            They have lawyers. We have math.<br>
-            <span style="font-size: 1.25rem; color: var(--text-muted);">Our signature-based minting makes piracy architecturally impossible.</span>
-        </div>
-        <div class="card-grid" style="max-width: 600px;">
-            <div class="card" style="text-align: center;">
-                <h3>Documentation</h3>
-                <a href="/" style="color: var(--primary); text-decoration: none;">docs.acesteps.xyz</a>
+<!-- SLIDE 15: FINANCIALS -->
+<div class="slide-container" id="slide-15">
+    <h2 class="slide-title">Financial <span>Projections</span></h2>
+    <div style="position: relative; z-index: 1;">
+        <table style="margin-bottom: 30px;">
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th style="text-align: center;">Year 1</th>
+                    <th style="text-align: center;">Year 2</th>
+                    <th style="text-align: center;">Year 3</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Creators</strong></td>
+                    <td style="text-align: center;">10,000</td>
+                    <td style="text-align: center;">100,000</td>
+                    <td style="text-align: center;">500,000</td>
+                </tr>
+                <tr>
+                    <td><strong>Songs Created</strong></td>
+                    <td style="text-align: center;">50,000</td>
+                    <td style="text-align: center;">500,000</td>
+                    <td style="text-align: center;">2,500,000</td>
+                </tr>
+                <tr>
+                    <td><strong>Monthly Active Users</strong></td>
+                    <td style="text-align: center;">50,000</td>
+                    <td style="text-align: center;">500,000</td>
+                    <td style="text-align: center;">2,000,000</td>
+                </tr>
+                <tr>
+                    <td><strong>Ad Revenue (Gross)</strong></td>
+                    <td style="text-align: center;">$300K</td>
+                    <td style="text-align: center;">$3M</td>
+                    <td style="text-align: center;">$30M</td>
+                </tr>
+                <tr>
+                    <td><strong>Platform Revenue (20%)</strong></td>
+                    <td style="text-align: center; color: var(--primary-orange);">$60K</td>
+                    <td style="text-align: center; color: var(--primary-orange);">$600K</td>
+                    <td style="text-align: center; color: var(--primary-orange);">$6M</td>
+                </tr>
+                <tr>
+                    <td><strong>LP Fee Revenue (1%)</strong></td>
+                    <td style="text-align: center; color: var(--primary-orange);">$10K</td>
+                    <td style="text-align: center; color: var(--primary-orange);">$100K</td>
+                    <td style="text-align: center; color: var(--primary-orange);">$1M</td>
+                </tr>
+                <tr style="background: rgba(255, 107, 0, 0.1);">
+                    <td><strong style="color: var(--text-primary);">Total Revenue</strong></td>
+                    <td style="text-align: center; color: var(--primary-orange); font-weight: 700;">$70K</td>
+                    <td style="text-align: center; color: var(--primary-orange); font-weight: 700;">$700K</td>
+                    <td style="text-align: center; color: var(--primary-orange); font-weight: 700;">$7M</td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+            <div style="background: var(--bg-card); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color);">
+                <p style="font-size: 13px; color: var(--text-dim); margin: 0;"><i class="fa-solid fa-info-circle" style="color: var(--accent-blue);"></i> Average $3 CPM for ads</p>
             </div>
-            <div class="card" style="text-align: center;">
-                <h3>Follow Us</h3>
-                <a href="https://warpcast.com/acesteps" style="color: var(--primary); text-decoration: none;">@acesteps on Farcaster</a>
+            <div style="background: var(--bg-card); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color);">
+                <p style="font-size: 13px; color: var(--text-dim); margin: 0;"><i class="fa-solid fa-info-circle" style="color: var(--accent-blue);"></i> 20% of songs tokenized</p>
+            </div>
+            <div style="background: var(--bg-card); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color);">
+                <p style="font-size: 13px; color: var(--text-dim); margin: 0;"><i class="fa-solid fa-info-circle" style="color: var(--accent-blue);"></i> $200 avg monthly volume/song</p>
             </div>
         </div>
-        <a href="/" class="cta-button">
-            ← Back to Documentation
-        </a>
-        <div class="slide-number">14 / 14</div>
-    </section>
+    </div>
+</div>
 
-    <script>
-        // Generate navigation dots
-        const slides = document.querySelectorAll('.slide');
-        const nav = document.getElementById('nav');
-        const progressBar = document.getElementById('progressBar');
+<!-- SLIDE 16: THE ASK -->
+<div class="slide-container" id="slide-16">
+    <div class="decor-glow" style="width: 600px; height: 600px; top: -200px; right: -200px;"></div>
+    <h2 class="slide-title">The <span>Ask</span></h2>
+    <div class="grid-2" style="margin-top: 20px;">
+        <div>
+            <div style="background: linear-gradient(135deg, var(--primary-orange) 0%, #FF9500 100%); padding: 40px; border-radius: 20px; text-align: center; margin-bottom: 30px;">
+                <p style="font-size: 16px; color: rgba(255,255,255,0.8); margin-bottom: 8px;">Seeking Pre-Seed</p>
+                <h2 style="font-size: 48px; color: white; margin: 0;">$500K</h2>
+            </div>
+            <h3 style="color: var(--text-muted); margin-bottom: 20px;">Use of Funds</h3>
+            <div class="funds-chart">
+                <div class="fund-bar">
+                    <div class="label">Engineering</div>
+                    <div class="bar"><div class="fill" style="width: 40%;">40%</div></div>
+                </div>
+                <div class="fund-bar">
+                    <div class="label">Product</div>
+                    <div class="bar"><div class="fill" style="width: 25%;">25%</div></div>
+                </div>
+                <div class="fund-bar">
+                    <div class="label">Marketing</div>
+                    <div class="bar"><div class="fill" style="width: 20%;">20%</div></div>
+                </div>
+                <div class="fund-bar">
+                    <div class="label">Operations</div>
+                    <div class="bar"><div class="fill" style="width: 10%;">10%</div></div>
+                </div>
+                <div class="fund-bar">
+                    <div class="label">Reserve</div>
+                    <div class="bar"><div class="fill" style="width: 5%;">5%</div></div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h3 style="color: var(--accent-blue); margin-bottom: 24px;"><i class="fa-solid fa-flag-checkered"></i> Milestones This Round Enables</h3>
+            <ul class="check-list">
+                <li><i class="fa-solid fa-check-circle"></i> <span>Complete security audit</span></li>
+                <li><i class="fa-solid fa-check-circle"></i> <span>Mainnet launch on Base</span></li>
+                <li><i class="fa-solid fa-check-circle"></i> <span>Acquire first 10,000 creators</span></li>
+                <li><i class="fa-solid fa-check-circle"></i> <span>Achieve $100K monthly trading volume</span></li>
+                <li><i class="fa-solid fa-check-circle"></i> <span>Series A readiness</span></li>
+            </ul>
+            <div style="background: var(--bg-card); padding: 24px; border-radius: 16px; border: 1px solid var(--border-color); margin-top: 30px;">
+                <p style="margin: 0; color: var(--text-muted); font-size: 16px;"><i class="fa-solid fa-rocket" style="color: var(--primary-orange);"></i> First platform to combine AI creation + fractional NFTs + Uniswap V4 revenue hooks</p>
+            </div>
+        </div>
+    </div>
+</div>
 
-        slides.forEach((slide, index) => {
-            const dot = document.createElement('div');
-            dot.className = 'nav-dot';
-            dot.addEventListener('click', () => {
-                slide.scrollIntoView({ behavior: 'smooth' });
-            });
-            nav.appendChild(dot);
-        });
+<!-- SLIDE 17: CLOSING -->
+<div class="slide-container" id="slide-17">
+    <div class="decor-blob" style="width: 800px; height: 800px; background: var(--primary-orange); top: -300px; left: -200px;"></div>
+    <div class="decor-blob" style="width: 600px; height: 600px; background: var(--accent-blue); bottom: -200px; right: -100px;"></div>
+    <div style="text-align: center; margin: auto; position: relative; z-index: 1;">
+        <div style="width: 120px; height: 120px; border-radius: 30px; margin: 0 auto 30px; background: linear-gradient(135deg, var(--primary-orange) 0%, #FF9500 100%); display: flex; align-items: center; justify-content: center; box-shadow: 0 20px 60px rgba(255, 107, 0, 0.4);">
+            <i class="fa-solid fa-music" style="font-size: 50px; color: white;"></i>
+        </div>
+        <h2 style="font-size: 56px; margin-bottom: 16px; font-weight: 800;">The Future is <span style="color: var(--primary-orange);">AceSteps</span></h2>
+        <p style="font-size: 26px; color: var(--text-muted); margin-bottom: 50px;">Join the AI-Music Revolution on Base.</p>
 
-        const navDots = document.querySelectorAll('.nav-dot');
+        <div style="display: flex; justify-content: center; gap: 60px;">
+            <div>
+                <div style="width: 70px; height: 70px; border-radius: 50%; background: var(--bg-card); border: 2px solid var(--border-color); margin: 0 auto 12px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-globe" style="font-size: 28px; color: var(--accent-blue);"></i>
+                </div>
+                <p style="font-size: 18px; font-weight: 700; margin: 0;">acesteps.com</p>
+            </div>
+            <div>
+                <div style="width: 70px; height: 70px; border-radius: 50%; background: var(--bg-card); border: 2px solid var(--border-color); margin: 0 auto 12px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-at" style="font-size: 28px; color: var(--accent-purple);"></i>
+                </div>
+                <p style="font-size: 18px; font-weight: 700; margin: 0;">@acesteps</p>
+            </div>
+            <div>
+                <div style="width: 70px; height: 70px; border-radius: 50%; background: var(--bg-card); border: 2px solid var(--border-color); margin: 0 auto 12px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-envelope" style="font-size: 28px; color: var(--primary-orange);"></i>
+                </div>
+                <p style="font-size: 18px; font-weight: 700; margin: 0;">hello@acesteps.com</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-footer">
+        <span>BUILT ON BASE NETWORK</span>
+        <span>ACESTEPS.COM</span>
+        <span>FARCASTER ECOSYSTEM</span>
+    </div>
+</div>
 
-        // Update active dot and progress bar on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const index = Array.from(slides).indexOf(entry.target);
-                    navDots.forEach((dot, i) => {
-                        dot.classList.toggle('active', i === index);
-                    });
-                    // Update progress bar
-                    const progress = ((index + 1) / slides.length) * 100;
-                    progressBar.style.width = progress + '%';
-                }
-            });
-        }, { threshold: 0.5 });
+</div>
 
-        slides.forEach(slide => observer.observe(slide));
+<!-- Navigation Controls -->
+<div class="nav-controls">
+    <button class="nav-btn" onclick="prevSlide()" title="Previous (Left Arrow)">
+        <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <div class="slide-counter">
+        <span id="currentSlide">1</span> / <span id="totalSlides">17</span>
+    </div>
+    <button class="nav-btn" onclick="nextSlide()" title="Next (Right Arrow)">
+        <i class="fa-solid fa-chevron-right"></i>
+    </button>
+    <button class="nav-btn" onclick="toggleFullscreen()" title="Fullscreen (F)">
+        <i class="fa-solid fa-expand"></i>
+    </button>
+</div>
 
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            const currentSlide = Array.from(slides).findIndex(slide => {
+<script>
+    let currentSlide = 1;
+    const totalSlides = 17;
+
+    function showSlide(n) {
+        const slides = document.querySelectorAll('.slide-container');
+
+        if (n > totalSlides) currentSlide = 1;
+        if (n < 1) currentSlide = totalSlides;
+
+        slides.forEach(slide => slide.classList.remove('active'));
+        slides[currentSlide - 1].classList.add('active');
+
+        document.getElementById('currentSlide').textContent = currentSlide;
+        document.getElementById('progressBar').style.width = ((currentSlide / totalSlides) * 100) + '%';
+    }
+
+    function nextSlide() {
+        currentSlide++;
+        showSlide(currentSlide);
+    }
+
+    function prevSlide() {
+        currentSlide--;
+        showSlide(currentSlide);
+    }
+
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+            nextSlide();
+            e.preventDefault();
+        } else if (e.key === 'ArrowLeft' || e.key === 'Backspace') {
+            prevSlide();
+            e.preventDefault();
+        } else if (e.key === 'f' || e.key === 'F') {
+            toggleFullscreen();
+        } else if (e.key === 'Home') {
+            currentSlide = 1;
+            showSlide(currentSlide);
+        } else if (e.key === 'End') {
+            currentSlide = totalSlides;
+            showSlide(currentSlide);
+        }
+    });
+
+    // Click navigation on slides
+    document.querySelectorAll('.slide-container').forEach(slide => {
+        slide.addEventListener('click', (e) => {
+            if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A') {
                 const rect = slide.getBoundingClientRect();
-                return rect.top >= -100 && rect.top <= 100;
-            });
-
-            if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
-                e.preventDefault();
-                if (currentSlide < slides.length - 1) {
-                    slides[currentSlide + 1].scrollIntoView({ behavior: 'smooth' });
-                }
-            } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-                e.preventDefault();
-                if (currentSlide > 0) {
-                    slides[currentSlide - 1].scrollIntoView({ behavior: 'smooth' });
+                const x = e.clientX - rect.left;
+                if (x > rect.width / 2) {
+                    nextSlide();
+                } else {
+                    prevSlide();
                 }
             }
         });
+    });
 
-        // Set first dot as active on load
-        navDots[0].classList.add('active');
-    </script>
+    // Initialize
+    showSlide(currentSlide);
+</script>
+
 </body>
 </html>
