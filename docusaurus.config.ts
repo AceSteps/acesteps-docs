@@ -177,7 +177,7 @@ const config: Config = {
         },
         {
           href: '/pitch-deck.html',
-          label: 'Pitch Deck',
+          label: 'Pitch Demo',
           position: 'right',
           className: 'navbar-pitch-deck-link',
         },
