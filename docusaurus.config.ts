@@ -47,7 +47,7 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           routeBasePath: '/',
-          editUrl: 'https://github.com/Batuhan4/acesteps-docs/edit/main/',
+          editUrl: 'https://github.com/AceSteps/acesteps-docs/edit/main/',
           breadcrumbs: true,
         },
         blog: false,
@@ -183,7 +183,7 @@ const config: Config = {
           className: 'navbar-pitch-deck-link',
         },
         {
-          href: 'https://github.com/Batuhan4/acesteps-docs',
+          href: 'https://github.com/AceSteps/acesteps-docs',
           position: 'right',
           className: 'header-github-link',
           'aria-label': 'GitHub repository',
