@@ -9,7 +9,7 @@
 [![Built on Base](https://img.shields.io/badge/Built%20on-Base-0052FF?style=for-the-badge&logo=coinbase&logoColor=white)](https://base.org)
 [![Farcaster](https://img.shields.io/badge/Farcaster-8A63D2?style=for-the-badge&logo=farcaster&logoColor=white)](https://warpcast.com/acesteps)
 
-[**Live Documentation**](https://docs.acesteps.xyz) · [**Pitch Deck**](https://docs.acesteps.xyz/pitch-deck.html) · [**Website**](https://acesteps.xyz) · [**Farcaster**](https://warpcast.com/acesteps) · [**Twitter/X**](https://x.com/acesteps)
+[**Live Documentation**](https://acesteps-docs-b8j30poou-efes-projects-42ddc5f6.vercel.app) · [**Pitch Deck**](https://acesteps-docs-b8j30poou-efes-projects-42ddc5f6.vercel.app/pitch-deck.html) · [**Website**](https://acesteps.xyz) · [**Farcaster**](https://warpcast.com/acesteps) · [**Twitter/X**](https://x.com/acesteps)
 
 ---
 
@@ -237,6 +237,6 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 [![Uniswap](https://img.shields.io/badge/Uniswap_V4-FF007A?style=for-the-badge&logo=uniswap&logoColor=white)](https://uniswap.org)
 [![Farcaster](https://img.shields.io/badge/Farcaster-8A63D2?style=for-the-badge&logo=farcaster&logoColor=white)](https://farcaster.xyz)
 
-**[Live Docs](https://docs.acesteps.xyz)** · **[Pitch Deck](https://docs.acesteps.xyz/pitch-deck.html)**
+**[Live Docs](https://acesteps-docs-b8j30poou-efes-projects-42ddc5f6.vercel.app)** · **[Pitch Deck](https://acesteps-docs-b8j30poou-efes-projects-42ddc5f6.vercel.app/pitch-deck.html)**
 
 </div>
