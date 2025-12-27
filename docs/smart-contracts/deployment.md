@@ -22,11 +22,13 @@ Mainnet deployment pending audit completion.
 
 ## Base Sepolia (Testnet)
 
+Chain ID: `84532`
+
 | Contract | Address | Verified |
 |----------|---------|----------|
-| SongNFT | `0x...` | Yes |
-| SongVault | `0x...` | Yes |
-| RevenueHook | `0x...` | Yes |
+| SongNFT | [`0x4b86a687bBbf7348911cc88195e89AdA54cF5Ba7`](https://sepolia.basescan.org/address/0x4b86a687bBbf7348911cc88195e89AdA54cF5Ba7) | ✅ |
+| SongVault | [`0xdcfDc1cd433Cdc0Da24Ce1b979cdeb2563598566`](https://sepolia.basescan.org/address/0xdcfDc1cd433Cdc0Da24Ce1b979cdeb2563598566) | ✅ |
+| SongRevenueHook | [`0xd18424e29c61fc1adeb0538c135d61f3fa524050`](https://sepolia.basescan.org/address/0xd18424e29c61fc1adeb0538c135d61f3fa524050) | ✅ |
 
 ## Deployment Scripts
 

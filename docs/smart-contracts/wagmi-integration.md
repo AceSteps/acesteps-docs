@@ -22,16 +22,25 @@ const config = createConfig({
 });
 ```
 
+## Contract Addresses
+
+```typescript
+// Base Sepolia (Testnet)
+export const SONG_NFT_ADDRESS = '0x4b86a687bBbf7348911cc88195e89AdA54cF5Ba7' as const;
+export const SONG_VAULT_ADDRESS = '0xdcfDc1cd433Cdc0Da24Ce1b979cdeb2563598566' as const;
+export const REVENUE_HOOK_ADDRESS = '0xd18424e29c61fc1adeb0538c135d61f3fa524050' as const;
+```
+
 ## Contract Config
 
 ```typescript
 export const songNFTConfig = {
-  address: '0x...' as const,
+  address: SONG_NFT_ADDRESS,
   abi: songNFTAbi
 } as const;
 
 export const songVaultConfig = {
-  address: '0x...' as const,
+  address: SONG_VAULT_ADDRESS,
   abi: songVaultAbi
 } as const;
 ```
