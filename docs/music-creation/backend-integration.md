@@ -327,6 +327,122 @@ def generate_music(
 | Cold Start Overhead | ~$0.01 |
 | Monthly (10k songs) | ~$25-50 |
 
+## Dual-Model Architecture
+
+AceSteps uses **two open-source AI models** for full song generation with lyrics:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    DUAL-MODEL GENERATION PIPELINE                            │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   User Request: "love song about summer, pop style with female vocals"      │
+│        │                                                                     │
+│        │  with_lyrics: true                                                 │
+│        ▼                                                                     │
+│   ┌─────────────────────────────────────────────────────────────────────┐   │
+│   │            LLAMA-SONG-STREAM-3B (Lyrics Generation)                  │   │
+│   │                                                                      │   │
+│   │   Model: prithivMLmods/Llama-Song-Stream-3B-Instruct                │   │
+│   │   Base: Meta Llama 3.2 3B                                           │   │
+│   │   Training: 57.7k lyrical examples                                  │   │
+│   │   License: Apache 2.0                                               │   │
+│   │   Inference: CPU or GPU (~2-5 seconds)                              │   │
+│   │                                                                      │   │
+│   │   Input:  Theme + genre + mood                                      │   │
+│   │   Output: Structured lyrics (verse, chorus, bridge)                 │   │
+│   │                                                                      │   │
+│   └─────────────────────────────────────────────────────────────────────┘   │
+│        │                                                                     │
+│        │  lyrics_text                                                       │
+│        ▼                                                                     │
+│   ┌─────────────────────────────────────────────────────────────────────┐   │
+│   │              ACE-STEP 3.5B (Music + Vocal Synthesis)                 │   │
+│   │                                                                      │   │
+│   │   Model: ACE-Step/ACE-Step-v1-3.5B                                  │   │
+│   │   Architecture: Diffusion + Linear Transformer                      │   │
+│   │   License: Apache 2.0                                               │   │
+│   │   Inference: A10G GPU (~4-5 seconds for 30s)                        │   │
+│   │                                                                      │   │
+│   │   Input:  Prompt + lyrics + duration                                │   │
+│   │   Output: Complete audio with vocals                                │   │
+│   │                                                                      │   │
+│   └─────────────────────────────────────────────────────────────────────┘   │
+│        │                                                                     │
+│        ▼                                                                     │
+│   Final Output: MP3 audio file with AI-generated vocals and lyrics          │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Dual-Model Code Example
+
+```python
+@app.function(gpu="A10G", timeout=300)
+def generate_music_with_lyrics(
+    prompt: str,
+    duration: int,
+    with_lyrics: bool = False,
+    seed: int = None
+) -> dict:
+    """Generate music with optional AI lyrics."""
+
+    lyrics_text = None
+
+    # Step 1: Generate lyrics if requested
+    if with_lyrics:
+        from transformers import AutoModelForCausalLM, AutoTokenizer
+
+        # Load Llama-Song-Stream-3B
+        lyrics_model = AutoModelForCausalLM.from_pretrained(
+            "prithivMLmods/Llama-Song-Stream-3B-Instruct",
+            torch_dtype=torch.bfloat16
+        )
+        tokenizer = AutoTokenizer.from_pretrained(
+            "prithivMLmods/Llama-Song-Stream-3B-Instruct"
+        )
+
+        # Generate lyrics
+        lyrics_prompt = f"Write song lyrics for: {prompt}"
+        inputs = tokenizer(lyrics_prompt, return_tensors="pt")
+        outputs = lyrics_model.generate(**inputs, max_new_tokens=512)
+        lyrics_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+
+    # Step 2: Generate music with ACE-Step
+    from acestep import ACEStepPipeline
+
+    pipe = ACEStepPipeline.from_pretrained(
+        "ACE-Step/ACE-Step-v1-3.5B",
+        torch_dtype=torch.bfloat16
+    )
+
+    # Combine prompt with lyrics if generated
+    full_prompt = prompt
+    if lyrics_text:
+        full_prompt = f"{prompt}\n\n[Lyrics]\n{lyrics_text}"
+
+    result = pipe(
+        prompt=full_prompt,
+        duration=duration,
+        seed=seed
+    )
+
+    return {
+        "audio_bytes": result.to_mp3(bitrate=320),
+        "lyrics": lyrics_text,
+        "seed": result.seed
+    }
+```
+
+### Model Specifications
+
+| Model | Purpose | Parameters | License | Inference |
+|-------|---------|------------|---------|-----------|
+| **ACE-Step 3.5B** | Music + vocals | 3.5B | Apache 2.0 | GPU (A10G) |
+| **Llama-Song-Stream-3B** | Lyrics text | 3B | Apache 2.0 | CPU or GPU |
+
+Both models are **100% open-source** with Apache 2.0 licenses, ensuring full commercial rights and zero copyright risk for all generated content.
+
 ## Supabase Integration
 
 ### Database Schema

@@ -143,23 +143,98 @@ Piano, Guitar (acoustic/electric), Drums, Bass, Synthesizer, Strings,
 Brass, Woodwinds, Percussion, Violin, Cello, Saxophone, Trumpet, Flute
 ```
 
-### Lyrics Support
+### Lyrics Generation with Llama-Song-Stream-3B
 
-Generate songs with AI-generated vocals and lyrics:
+AceSteps uses **two open-source AI models** working together:
 
 ```
-Input: "love song with female vocals about summer nights by the ocean,
-        indie folk style with acoustic guitar"
-
-Output: Song with generated lyrics matching the theme, melody, and vocals
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                      DUAL-MODEL LYRICS PIPELINE                              │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   User Prompt: "love song about summer nights by the ocean"                 │
+│        │                                                                     │
+│        ▼                                                                     │
+│   ┌─────────────────────────────────────────────────────────────────────┐   │
+│   │              LLAMA-SONG-STREAM-3B (Lyrics Generation)                │   │
+│   │                                                                      │   │
+│   │   • Fine-tuned Llama 3.2 3B model                                   │   │
+│   │   • 57.7k lyrical training examples                                 │   │
+│   │   • Maintains rhyme, meter, thematic consistency                    │   │
+│   │   • Apache 2.0 license                                              │   │
+│   │                                                                      │   │
+│   │   Output: "Verse 1: Walking down the sandy shore..."                │   │
+│   └─────────────────────────────────────────────────────────────────────┘   │
+│        │                                                                     │
+│        │  Generated lyrics + original prompt                                │
+│        ▼                                                                     │
+│   ┌─────────────────────────────────────────────────────────────────────┐   │
+│   │              ACE-STEP 3.5B (Music + Vocal Synthesis)                 │   │
+│   │                                                                      │   │
+│   │   • Combines lyrics with musical generation                         │   │
+│   │   • Synthesizes vocals matching melody                              │   │
+│   │   • Aligns lyrics to beat and rhythm                                │   │
+│   │                                                                      │   │
+│   │   Output: Complete song with vocals                                 │   │
+│   └─────────────────────────────────────────────────────────────────────┘   │
+│        │                                                                     │
+│        ▼                                                                     │
+│   Final Audio: Love song with AI vocals and lyrics                          │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-:::warning Lyric Quality
-Vocal synthesis is still evolving. Results work best with:
-- Clear genre specification
-- Simple lyrical themes
-- Tier 1 languages
+#### Llama-Song-Stream-3B Specifications
+
+| Specification | Value |
+|---------------|-------|
+| Model Name | Llama-Song-Stream-3B-Instruct |
+| Base Model | Meta Llama 3.2 3B |
+| Parameters | 3 billion |
+| Training Data | 57.7k lyrical examples |
+| License | Apache 2.0 |
+| Developer | prithivMLmods |
+
+#### Lyrics Generation Capabilities
+
+| Feature | Description |
+|---------|-------------|
+| **Genre Awareness** | Pop, rock, rap, R&B, country, classical, etc. |
+| **Rhyme Schemes** | ABAB, AABB, free verse, and more |
+| **Song Structure** | Verse, chorus, bridge, pre-chorus, outro |
+| **Thematic Control** | Love, heartbreak, party, motivation, storytelling |
+| **Multilingual** | Best in English, supports other languages |
+
+#### Example Usage
+
+```
+Input Theme: "motivational workout anthem"
+Genre: "EDM / electronic"
+
+Generated Lyrics:
+[Verse 1]
+Push through the fire, feel the burn ignite
+Every rep is power, every step is right
+No more excuses, leave them all behind
+Champions are built one rep at a time
+
+[Chorus]
+Rise up, rise up, we're unstoppable tonight
+Rise up, rise up, reaching for the light...
+```
+
+:::tip Best Results
+For optimal lyrics generation:
+- Specify genre and mood clearly
+- Mention desired song structure (verse/chorus)
+- Include thematic keywords
+- Use Tier 1 languages (English, Chinese, Japanese, Korean)
 :::
+
+#### Resources
+
+- [Llama-Song-Stream-3B on Hugging Face](https://huggingface.co/prithivMLmods/Llama-Song-Stream-3B-Instruct)
+- [GGUF Version for Local Use](https://huggingface.co/prithivMLmods/Llama-Song-Stream-3B-Instruct-GGUF)
 
 ### Advanced Generation Modes
 
