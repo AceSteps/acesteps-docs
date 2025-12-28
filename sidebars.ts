@@ -35,6 +35,8 @@ const sidebars: SidebarsConfig = {
       items: [
         'music-creation/overview',
         'music-creation/ace-step-ai',
+        'music-creation/ai-architecture',
+        'music-creation/backend-integration',
         'music-creation/prompts-guide',
         'music-creation/audio-formats',
       ],
