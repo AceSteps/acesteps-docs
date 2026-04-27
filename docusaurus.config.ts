@@ -118,7 +118,7 @@ const config: Config = {
     image: 'img/acesteps-social-card.jpg',
     metadata: [
       { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:site', content: '@acesteps' },
+      { name: 'twitter:site', content: '@AceStepsApp' },
       { name: 'og:site_name', content: 'AceSteps Documentation' },
     ],
     colorMode: {
@@ -205,7 +205,7 @@ const config: Config = {
           title: 'Community',
           items: [
             {label: 'Farcaster', href: 'https://warpcast.com/acesteps'},
-            {label: 'Twitter/X', href: 'https://x.com/acesteps'},
+            {label: 'Twitter/X', href: 'https://x.com/AceStepsApp'},
           ],
         },
         {
